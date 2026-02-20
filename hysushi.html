@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hysushi - Fresh Japanese Cuisine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* NEW NAVIGATION BAR */
+        .new-navbar {
+            background: white;
+            padding: 15px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-center {
+            flex: 1;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #dc143c;
+            margin: 0;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #666;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: #f5f5f5;
+            color: #dc143c;
+        }
+
+        /* Main styles matching index.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Hero Image */
+        .hero-section {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            padding: 20px 16px 16px;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Restaurant Info */
+        .restaurant-info {
+            padding: 20px 16px;
+            background-color: white;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 8px;
+        }
+
+        .restaurant-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #8B0000;
+        }
+
+        .rating-delivery {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            background: #FFF5F5;
+            border-radius: 20px;
+        }
+
+        .rating-value {
+            font-weight: 700;
+            margin-right: 4px;
+            color: #8B0000;
+        }
+
+        .delivery-time {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            background: #F8F9FA;
+            border-radius: 20px;
+            color: #495057;
+        }
+
+        .delivery-icon {
+            margin-right: 6px;
+            color: #8B0000;
+        }
+
+        /* Categories Section - Redesigned */
+        .categories-section {
+            padding: 16px;
+            background-color: white;
+            margin-bottom: 8px;
+            position: sticky;
+            top: 60px;
+            z-index: 900;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .categories {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+            scroll-behavior: smooth;
+        }
+
+        .categories::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category {
+            padding: 12px 18px;
+            background: #F8F9FA;
+            border-radius: 12px;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 500;
+            color: #495057;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #E9ECEF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: max-content;
+            will-change: transform, background, color;
+        }
+
+        .category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #8B0000 0%, #6D0000 100%);
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .category.active {
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.25);
+            border-color: #8B0000;
+            font-weight: 600;
+        }
+
+        .category.active::before {
+            opacity: 1;
+        }
+
+        .category.highlight {
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Category Items Section */
+        .category-items-section {
+            padding: 20px 16px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 16px;
+            scroll-margin-top: 120px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .category-items-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #212529;
+            position: relative;
+        }
+
+        .category-item {
+            display: flex;
+            padding: 16px 0;
+            border-bottom: 1px solid #F1F3F5;
+            transition: transform 0.2s ease;
+        }
+
+        .category-item:last-child {
+            border-bottom: none;
+        }
+
+        .category-item:hover {
+            transform: translateX(5px);
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-right: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-item:hover .item-image {
+            transform: scale(1.05);
+        }
+
+        .item-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 6px;
+            color: #212529;
+        }
+
+        .item-description {
+            font-size: 13px;
+            color: #6C757D;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: #000000;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .price-size {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .size-text {
+            color: #6C757D;
+        }
+
+        .price-amount {
+            color: #8B0000;
+        }
+
+        .item-add-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8B0000 0%, #6D0000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(139, 0, 0, 0.3);
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .item-add-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* Animation for navbar transition */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Observer animation for sections */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-section {
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        /* New animations for categories */
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .category.slide-in-left {
+            animation: slideInFromLeft 0.4s ease forwards;
+        }
+
+        .category.slide-in-right {
+            animation: slideInFromRight 0.4s ease forwards;
+        }
+
+        /* View Cart Button */
+        .view-cart-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 25px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .view-cart-btn:hover {
+            background-color: #660000;
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .cart-item-count {
+            background: #fff;
+            color: #8B0000;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Stars animation */
+        @keyframes starAnimation {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0.5);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(var(--tx), var(--ty)) scale(1.2);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(1);
+            }
+        }
+
+        .star {
+            position: absolute;
+            color: white;
+            font-size: 8px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Animation for added items */
+        .pulse {
+            animation: pulse 0.5s ease;
+        }
+
+        /* Animation for category switching */
+        @keyframes categorySwitch {
+            0% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(0.95) translateY(5px);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .category-switch-animation {
+            animation: categorySwitch 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Main Content Container */
+        .main-content {
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        /* Search Modal */
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 100px;
+        }
+
+        .search-container {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-header h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .close-search {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #dc143c;
+        }
+
+        .search-results {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .search-result-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-result-item:hover {
+            background: #f5f5f5;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .search-result-description {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .search-result-price {
+            color: #dc143c;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 16px;
+            }
+
+            .nav-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            .search-container {
+                width: 95%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NEW NAVIGATION BAR -->
+    <div class="new-navbar">
+        <div class="nav-left">
+            <button class="nav-btn" id="backBtn" title="Back to Home">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <div class="nav-center">
+            <h1 class="page-title">McDonald's</h1>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn" id="searchBtn" title="Search Menu">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="nav-btn" id="shareBtn" title="Share Page">
+                <i class="fas fa-share-alt"></i>
+            </button>
+            <button class="nav-btn" id="homeBtn" title="Home">
+                <i class="fas fa-home"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-container">
+            <div class="search-header">
+                <h3>Search Menu</h3>
+                <button class="close-search" id="closeSearchBtn">×</button>
+            </div>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search for dishes..."
+                autocomplete="off">
+            <div class="search-results" id="searchResults">
+                <!-- Search results will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Image -->
+    <div class="hero-section">
+        <img src="https://i.ibb.co/4gGzV5T/sushi-hero.jpg" alt="Hysushi Sushi" class="hero-image">
+        <div class="hero-overlay">
+            <h1 class="hero-title">Hysushi</h1>
+            <p class="hero-subtitle">Fresh Japanese Cuisine</p>
+        </div>
+    </div>
+
+    <!-- Restaurant Info -->
+    <div class="restaurant-info">
+        <h2 class="restaurant-name">Hysushi</h2>
+        <div class="rating-delivery">
+            <div class="rating">
+                <span class="rating-value">4.6</span>
+                <i class="fas fa-star"></i>
+                <span>(287 ratings)</span>
+            </div>
+            <div class="delivery-time">
+                <i class="fas fa-clock delivery-icon"></i>
+                <span>30-45 min</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Navigation -->
+    <div class="categories-section">
+        <div class="categories" id="categoriesContainer">
+            <!-- Categories will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Salads Section -->
+        <div class="category-items-section animate-section" id="saladsSection">
+            <h2 class="section-title">Salads</h2>
+
+            <!-- Avocado and Shrimp Salad -->
+            <div class="category-item" id="avocado-shrimp-salad-item">
+                <img src="https://i.ibb.co/Nn9y52mN/Avocado-and-shrimp-salad.webp" alt="Avocado and Shrimp Salad"
+                    class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Avocado and Shrimp Salad</div>
+                    <div class="item-description">Fresh avocado with succulent shrimp on a bed of mixed greens,
+                        drizzled with a light citrus dressing.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">45.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="avocado-shrimp-salad-btn" data-name="Avocado and Shrimp Salad"
+                            data-price="45.00" data-img="https://i.ibb.co/Nn9y52mN/Avocado-and-shrimp-salad.webp"
+                            data-description="Fresh avocado with succulent shrimp on a bed of mixed greens, drizzled with a light citrus dressing">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thai Chicken Salad -->
+            <div class="category-item" id="thai-chicken-salad-item">
+                <img src="https://i.ibb.co/qLHKZ90S/Thai-chicken-salad.webp" alt="Thai Chicken Salad"
+                    class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Thai Chicken Salad</div>
+                    <div class="item-description">Grilled chicken with fresh herbs, peanuts, and a tangy Thai dressing.
+                    </div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">45.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="thai-chicken-salad-btn" data-name="Thai Chicken Salad"
+                            data-price="45.00" data-img="https://i.ibb.co/qLHKZ90S/Thai-chicken-salad.webp"
+                            data-description="Grilled chicken with fresh herbs, peanuts, and a tangy Thai dressing">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vietnamese Salad -->
+            <div class="category-item" id="vietnamese-salad-item">
+                <img src="https://i.ibb.co/kgXb6dCG/Vietnamese-salad.webp" alt="Vietnamese Salad" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Vietnamese Salad</div>
+                    <div class="item-description">Fresh vegetables, herbs, rice noodles with grilled pork or tofu, and
+                        nuoc cham dressing.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">50.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="vietnamese-salad-btn" data-name="Vietnamese Salad"
+                            data-price="50.00" data-img="https://i.ibb.co/kgXb6dCG/Vietnamese-salad.webp"
+                            data-description="Fresh vegetables, herbs, rice noodles with grilled pork or tofu, and nuoc cham dressing">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chicken and Peanut Salad -->
+            <div class="category-item" id="chicken-peanut-salad-item">
+                <img src="https://i.ibb.co/dR6mHxg/Chicken-and-peanut-salad.webp" alt="Chicken and Peanut Salad"
+                    class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Chicken and Peanut Salad</div>
+                    <div class="item-description">Grilled chicken strips with roasted peanuts, crispy vegetables, and a
+                        savory peanut sauce.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">50.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="chicken-peanut-salad-btn" data-name="Chicken and Peanut Salad"
+                            data-price="50.00" data-img="https://i.ibb.co/dR6mHxg/Chicken-and-peanut-salad.webp"
+                            data-description="Grilled chicken strips with roasted peanuts, crispy vegetables, and a savory peanut sauce">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goma Wakame Salad -->
+            <div class="category-item" id="goma-wakame-salad-item">
+                <img src="https://i.ibb.co/204b2JRT/Goma-wakame-salad.webp" alt="Goma Wakame Salad" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Goma Wakame Salad</div>
+                    <div class="item-description">Japanese seaweed salad with sesame dressing, a perfect blend of savory
+                        and nutty flavors.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">60.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="goma-wakame-salad-btn" data-name="Goma Wakame Salad"
+                            data-price="60.00" data-img="https://i.ibb.co/204b2JRT/Goma-wakame-salad.webp"
+                            data-description="Japanese seaweed salad with sesame dressing, a perfect blend of savory and nutty flavors">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exotic Salad -->
+            <div class="category-item" id="exotic-salad-item">
+                <img src="https://i.ibb.co/SwCtg6V3/Exotic-Salad.webp" alt="Exotic Salad" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Exotic Salad</div>
+                    <div class="item-description">A colorful mix of exotic fruits, greens, and nuts with a light
+                        passionfruit dressing.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">60.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="exotic-salad-btn" data-name="Exotic Salad" data-price="60.00"
+                            data-img="https://i.ibb.co/SwCtg6V3/Exotic-Salad.webp"
+                            data-description="A colorful mix of exotic fruits, greens, and nuts with a light passionfruit dressing">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thai Beef Salad -->
+            <div class="category-item" id="thai-beef-salad-item">
+                <img src="https://i.ibb.co/bRLTV3Zq/Thai-beef-salad.webp" alt="Thai Beef Salad" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Thai Beef Salad</div>
+                    <div class="item-description">Spicy grilled beef with fresh herbs, lettuce, and a zesty lime
+                        dressing.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">60.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="thai-beef-salad-btn" data-name="Thai Beef Salad"
+                            data-price="60.00" data-img="https://i.ibb.co/bRLTV3Zq/Thai-beef-salad.webp"
+                            data-description="Spicy grilled beef with fresh herbs, lettuce, and a zesty lime dressing">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sushi Section -->
+        <div class="category-items-section animate-section" id="sushiSection">
+            <h2 class="section-title">Sushi</h2>
+
+            <!-- California Roll -->
+            <div class="category-item" id="california-roll-item">
+                <img src="https://i.ibb.co/7JmQZbV/california-roll.jpg" alt="California Roll" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">California Roll</div>
+                    <div class="item-description">Crab, avocado, and cucumber wrapped in sushi rice and nori.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">8 pieces</span>
+                                <span class="price-amount">80.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="california-roll-btn" data-name="California Roll"
+                            data-price="80.00" data-img="https://i.ibb.co/7JmQZbV/california-roll.jpg"
+                            data-description="Crab, avocado, and cucumber wrapped in sushi rice and nori">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Salmon Nigiri -->
+            <div class="category-item" id="salmon-nigiri-item">
+                <img src="https://i.ibb.co/0jqYQcT/salmon-nigiri.jpg" alt="Salmon Nigiri" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Salmon Nigiri</div>
+                    <div class="item-description">Fresh salmon slices over pressed sushi rice.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">2 pieces</span>
+                                <span class="price-amount">75.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="salmon-nigiri-btn" data-name="Salmon Nigiri" data-price="75.00"
+                            data-img="https://i.ibb.co/0jqYQcT/salmon-nigiri.jpg"
+                            data-description="Fresh salmon slices over pressed sushi rice">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spicy Tuna Roll -->
+            <div class="category-item" id="spicy-tuna-roll-item">
+                <img src="https://i.ibb.co/4MwHpFj/spicy-tuna-roll.jpg" alt="Spicy Tuna Roll" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Spicy Tuna Roll</div>
+                    <div class="item-description">Spicy tuna with cucumber wrapped in sushi rice.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">8 pieces</span>
+                                <span class="price-amount">85.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="spicy-tuna-roll-btn" data-name="Spicy Tuna Roll"
+                            data-price="85.00" data-img="https://i.ibb.co/4MwHpFj/spicy-tuna-roll.jpg"
+                            data-description="Spicy tuna with cucumber wrapped in sushi rice">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ramen Section -->
+        <div class="category-items-section animate-section" id="ramenSection">
+            <h2 class="section-title">Ramen</h2>
+
+            <!-- Tonkotsu Ramen -->
+            <div class="category-item" id="tonkotsu-ramen-item">
+                <img src="https://i.ibb.co/8cLzZbG/tonkotsu-ramen.jpg" alt="Tonkotsu Ramen" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Tonkotsu Ramen</div>
+                    <div class="item-description">Rich pork bone broth with chashu pork, bamboo shoots, and egg.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">95.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="tonkotsu-ramen-btn" data-name="Tonkotsu Ramen"
+                            data-price="95.00" data-img="https://i.ibb.co/8cLzZbG/tonkotsu-ramen.jpg"
+                            data-description="Rich pork bone broth with chashu pork, bamboo shoots, and egg">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shoyu Ramen -->
+            <div class="category-item" id="shoyu-ramen-item">
+                <img src="https://i.ibb.co/0mY4HpF/shoyu-ramen.jpg" alt="Shoyu Ramen" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Shoyu Ramen</div>
+                    <div class="item-description">Soy sauce based broth with chicken, nori, and green onions.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">90.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="shoyu-ramen-btn" data-name="Shoyu Ramen" data-price="90.00"
+                            data-img="https://i.ibb.co/0mY4HpF/shoyu-ramen.jpg"
+                            data-description="Soy sauce based broth with chicken, nori, and green onions">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appetizers Section -->
+        <div class="category-items-section animate-section" id="appetizersSection">
+            <h2 class="section-title">Appetizers</h2>
+
+            <!-- Edamame -->
+            <div class="category-item" id="edamame-item">
+                <img src="https://i.ibb.co/0CJk4Xj/edamame.jpg" alt="Edamame" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Edamame</div>
+                    <div class="item-description">Steamed soybeans with sea salt.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">30.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="edamame-btn" data-name="Edamame" data-price="30.00"
+                            data-img="https://i.ibb.co/0CJk4Xj/edamame.jpg"
+                            data-description="Steamed soybeans with sea salt">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gyoza -->
+            <div class="category-item" id="gyoza-item">
+                <img src="https://i.ibb.co/9rSqVjK/gyoza.jpg" alt="Gyoza" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Gyoza</div>
+                    <div class="item-description">Japanese pan-fried dumplings with pork and vegetables.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">6 pieces</span>
+                                <span class="price-amount">40.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="gyoza-btn" data-name="Gyoza" data-price="40.00"
+                            data-img="https://i.ibb.co/9rSqVjK/gyoza.jpg"
+                            data-description="Japanese pan-fried dumplings with pork and vegetables">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desserts Section -->
+        <div class="category-items-section animate-section" id="dessertsSection">
+            <h2 class="section-title">Desserts</h2>
+
+            <!-- Mochi Ice Cream -->
+            <div class="category-item" id="mochi-ice-cream-item">
+                <img src="https://i.ibb.co/3zS1JfX/mochi-ice-cream.jpg" alt="Mochi Ice Cream" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Mochi Ice Cream</div>
+                    <div class="item-description">Japanese rice cake with ice cream filling.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">3 pieces</span>
+                                <span class="price-amount">35.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="mochi-ice-cream-btn" data-name="Mochi Ice Cream"
+                            data-price="35.00" data-img="https://i.ibb.co/3zS1JfX/mochi-ice-cream.jpg"
+                            data-description="Japanese rice cake with ice cream filling">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matcha Tiramisu -->
+            <div class="category-item" id="matcha-tiramisu-item">
+                <img src="https://i.ibb.co/0nRgQcT/matcha-tiramisu.jpg" alt="Matcha Tiramisu" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Matcha Tiramisu</div>
+                    <div class="item-description">Japanese twist on classic tiramisu with matcha green tea.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">45.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="matcha-tiramisu-btn" data-name="Matcha Tiramisu"
+                            data-price="45.00" data-img="https://i.ibb.co/0nRgQcT/matcha-tiramisu.jpg"
+                            data-description="Japanese twist on classic tiramisu with matcha green tea">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drinks Section -->
+        <div class="category-items-section animate-section" id="drinksSection">
+            <h2 class="section-title">Drinks</h2>
+
+            <!-- Matcha Latte -->
+            <div class="category-item" id="matcha-latte-item">
+                <img src="https://i.ibb.co/7JmQZbV/matcha-latte.jpg" alt="Matcha Latte" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Matcha Latte</div>
+                    <div class="item-description">Traditional Japanese green tea latte.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Regular</span>
+                                <span class="price-amount">35.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="matcha-latte-btn" data-name="Matcha Latte" data-price="35.00"
+                            data-img="https://i.ibb.co/7JmQZbV/matcha-latte.jpg"
+                            data-description="Traditional Japanese green tea latte">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sake -->
+            <div class="category-item" id="sake-item">
+                <img src="https://i.ibb.co/0jqYQcT/sake.jpg" alt="Sake" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Sake</div>
+                    <div class="item-description">Traditional Japanese rice wine.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Small Bottle</span>
+                                <span class="price-amount">60.00 DH</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="sake-btn" data-name="Sake" data-price="60.00"
+                            data-img="https://i.ibb.co/0jqYQcT/sake.jpg"
+                            data-description="Traditional Japanese rice wine">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Cart Button -->
+    <button class="view-cart-btn" id="viewCartBtn">
+        <i class="fas fa-shopping-cart"></i>
+        View Cart
+        <span class="cart-item-count" id="cartItemCount">0</span>
+    </button>
+
+    <!-- Stars Animation Container -->
+    <div class="stars-container" id="starsContainer"></div>
+
+    <script>
+        // Products Data for Hysushi
+        const productsData = {
+            // SALADS
+            "Avocado and Shrimp Salad": {
+                name: "Avocado and Shrimp Salad",
+                basePrice: 45.00,
+                img: "https://i.ibb.co/Nn9y52mN/Avocado-and-shrimp-salad.webp",
+                description: "Fresh avocado with succulent shrimp on a bed of mixed greens, drizzled with a light citrus dressing.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Thai Chicken Salad": {
+                name: "Thai Chicken Salad",
+                basePrice: 45.00,
+                img: "https://i.ibb.co/qLHKZ90S/Thai-chicken-salad.webp",
+                description: "Grilled chicken with fresh herbs, peanuts, and a tangy Thai dressing.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Vietnamese Salad": {
+                name: "Vietnamese Salad",
+                basePrice: 50.00,
+                img: "https://i.ibb.co/kgXb6dCG/Vietnamese-salad.webp",
+                description: "Fresh vegetables, herbs, rice noodles with grilled pork or tofu, and nuoc cham dressing.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Chicken and Peanut Salad": {
+                name: "Chicken and Peanut Salad",
+                basePrice: 50.00,
+                img: "https://i.ibb.co/dR6mHxg/Chicken-and-peanut-salad.webp",
+                description: "Grilled chicken strips with roasted peanuts, crispy vegetables, and a savory peanut sauce.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Goma Wakame Salad": {
+                name: "Goma Wakame Salad",
+                basePrice: 60.00,
+                img: "https://i.ibb.co/204b2JRT/Goma-wakame-salad.webp",
+                description: "Japanese seaweed salad with sesame dressing, a perfect blend of savory and nutty flavors.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Exotic Salad": {
+                name: "Exotic Salad",
+                basePrice: 60.00,
+                img: "https://i.ibb.co/SwCtg6V3/Exotic-Salad.webp",
+                description: "A colorful mix of exotic fruits, greens, and nuts with a light passionfruit dressing.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Thai Beef Salad": {
+                name: "Thai Beef Salad",
+                basePrice: 60.00,
+                img: "https://i.ibb.co/bRLTV3Zq/Thai-beef-salad.webp",
+                description: "Spicy grilled beef with fresh herbs, lettuce, and a zesty lime dressing.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+
+            // SUSHI
+            "California Roll": {
+                name: "California Roll",
+                basePrice: 80.00,
+                img: "https://i.ibb.co/7JmQZbV/california-roll.jpg",
+                description: "Crab, avocado, and cucumber wrapped in sushi rice and nori.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Salmon Nigiri": {
+                name: "Salmon Nigiri",
+                basePrice: 75.00,
+                img: "https://i.ibb.co/0jqYQcT/salmon-nigiri.jpg",
+                description: "Fresh salmon slices over pressed sushi rice.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Spicy Tuna Roll": {
+                name: "Spicy Tuna Roll",
+                basePrice: 85.00,
+                img: "https://i.ibb.co/4MwHpFj/spicy-tuna-roll.jpg",
+                description: "Spicy tuna with cucumber wrapped in sushi rice.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+
+            // RAMEN
+            "Tonkotsu Ramen": {
+                name: "Tonkotsu Ramen",
+                basePrice: 95.00,
+                img: "https://i.ibb.co/8cLzZbG/tonkotsu-ramen.jpg",
+                description: "Rich pork bone broth with chashu pork, bamboo shoots, and egg.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Shoyu Ramen": {
+                name: "Shoyu Ramen",
+                basePrice: 90.00,
+                img: "https://i.ibb.co/0mY4HpF/shoyu-ramen.jpg",
+                description: "Soy sauce based broth with chicken, nori, and green onions.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+
+            // APPETIZERS
+            "Edamame": {
+                name: "Edamame",
+                basePrice: 30.00,
+                img: "https://i.ibb.co/0CJk4Xj/edamame.jpg",
+                description: "Steamed soybeans with sea salt.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Gyoza": {
+                name: "Gyoza",
+                basePrice: 40.00,
+                img: "https://i.ibb.co/9rSqVjK/gyoza.jpg",
+                description: "Japanese pan-fried dumplings with pork and vegetables.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+
+            // DESSERTS
+            "Mochi Ice Cream": {
+                name: "Mochi Ice Cream",
+                basePrice: 35.00,
+                img: "https://i.ibb.co/3zS1JfX/mochi-ice-cream.jpg",
+                description: "Japanese rice cake with ice cream filling.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Matcha Tiramisu": {
+                name: "Matcha Tiramisu",
+                basePrice: 45.00,
+                img: "https://i.ibb.co/0nRgQcT/matcha-tiramisu.jpg",
+                description: "Japanese twist on classic tiramisu with matcha green tea.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+
+            // DRINKS
+            "Matcha Latte": {
+                name: "Matcha Latte",
+                basePrice: 35.00,
+                img: "https://i.ibb.co/7JmQZbV/matcha-latte.jpg",
+                description: "Traditional Japanese green tea latte.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Sake": {
+                name: "Sake",
+                basePrice: 60.00,
+                img: "https://i.ibb.co/0jqYQcT/sake.jpg",
+                description: "Traditional Japanese rice wine.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            }
+        };
+
+        // UNIFIED CART CONFIG
+        const HYSUSHI_CONFIG = {
+            cartKey: 'unifiedCart',
+            restaurantName: 'Hysushi',
+            restaurantId: 'hysushi',
+            whatsappNumber: '212642620325',
+            emoji: '🍣'
+        };
+
+        // Initialize cart from unified storage
+        let cart = JSON.parse(localStorage.getItem(HYSUSHI_CONFIG.cartKey)) || [];
+
+        // DOM Elements
+        const categoriesContainer = document.getElementById('categoriesContainer');
+        const viewCartBtn = document.getElementById('viewCartBtn');
+        const cartItemCount = document.getElementById('cartItemCount');
+
+        const starsContainer = document.getElementById('starsContainer');
+        const backBtn = document.getElementById('backBtn');
+        const searchBtn = document.getElementById('searchBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const searchModal = document.getElementById('searchModal');
+        const closeSearchBtn = document.getElementById('closeSearchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCartCount();
+            renderCategories();
+            setupEventListeners();
+            setupScrollObserver();
+            setupSearchFunctionality();
+        });
+
+        // Render categories in navigation
+        function renderCategories() {
+            const categories = [
+                { id: 'saladsSection', name: 'Salads', icon: 'fas fa-leaf' },
+                { id: 'sushiSection', name: 'Sushi', icon: 'fas fa-fish' },
+                { id: 'ramenSection', name: 'Ramen', icon: 'fas fa-utensils' },
+                { id: 'appetizersSection', name: 'Appetizers', icon: 'fas fa-utensil-spoon' },
+                { id: 'dessertsSection', name: 'Desserts', icon: 'fas fa-ice-cream' },
+                { id: 'drinksSection', name: 'Drinks', icon: 'fas fa-glass-whiskey' }
+            ];
+
+            categoriesContainer.innerHTML = '';
+            categories.forEach((category, index) => {
+                const button = document.createElement('div');
+                button.className = `category ${category.id === 'saladsSection' ? 'active' : ''}`;
+                button.setAttribute('data-category', category.id);
+                button.innerHTML = `<i class="${category.icon}"></i> ${category.name}`;
+
+                button.style.animationDelay = `${index * 0.1}s`;
+
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.category').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    button.classList.add('active');
+
+                    const categorySection = document.getElementById(category.id);
+                    if (categorySection) {
+                        categorySection.scrollIntoView({ behavior: 'smooth' });
+                    }
+
+                    button.classList.add('highlight');
+                    setTimeout(() => {
+                        button.classList.remove('highlight');
+                    }, 500);
+                });
+
+                categoriesContainer.appendChild(button);
+            });
+        }
+
+        // Add to cart function
+        function addToCart(productName, product) {
+            const existingItemIndex = cart.findIndex(item =>
+                item.name === productName &&
+                item.restaurantId === HYSUSHI_CONFIG.restaurantId
+            );
+
+            if (existingItemIndex !== -1) {
+                cart[existingItemIndex].quantity += 1;
+                cart[existingItemIndex].totalPrice = cart[existingItemIndex].price * cart[existingItemIndex].quantity;
+            } else {
+                cart.push({
+                    productKey: productName.toLowerCase().replace(/\s+/g, '-'),
+                    restaurantId: HYSUSHI_CONFIG.restaurantId,
+                    restaurantName: HYSUSHI_CONFIG.restaurantName,
+                    restaurantEmoji: HYSUSHI_CONFIG.emoji,
+                    name: product.name,
+                    price: product.basePrice,
+                    img: product.img,
+                    quantity: 1,
+                    totalPrice: product.basePrice
+                });
+            }
+
+            saveCart();
+            updateCartCount();
+
+            const addBtn = document.querySelector(`[data-name="${productName}"]`);
+            if (addBtn) {
+                addBtn.classList.add('pulse');
+                setTimeout(() => {
+                    addBtn.classList.remove('pulse');
+                }, 300);
+            }
+
+            createStarsAnimation();
+
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+
+        // Save cart to localStorage
+        function saveCart() {
+            localStorage.setItem(HYSUSHI_CONFIG.cartKey, JSON.stringify(cart));
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartItemCount.textContent = totalItems;
+
+        }
+
+        // Create stars animation
+        function createStarsAnimation() {
+            const starCount = 8;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                const startX = Math.random() * window.innerWidth;
+                const startY = window.innerHeight;
+                const endX = window.innerWidth - 30;
+                const endY = 30;
+                const size = 12 + Math.random() * 12;
+
+                star.style.left = `${startX}px`;
+                star.style.top = `${startY}px`;
+                star.style.fontSize = `${size}px`;
+                star.style.setProperty('--tx', `${endX - startX}px`);
+                star.style.setProperty('--ty', `${endY - startY}px`);
+
+                starsContainer.appendChild(star);
+                star.style.animation = `starAnimation 1s ease forwards`;
+
+                setTimeout(() => {
+                    if (star.parentNode) {
+                        star.parentNode.removeChild(star);
+                    }
+                }, 1000);
+            }
+        }
+
+        // Setup search functionality
+        function setupSearchFunctionality() {
+            // Open search modal
+            searchBtn.addEventListener('click', () => {
+                searchModal.style.display = 'flex';
+                searchInput.focus();
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+            });
+
+            // Close search modal
+            closeSearchBtn.addEventListener('click', () => {
+                searchModal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside
+            searchModal.addEventListener('click', (e) => {
+                if (e.target === searchModal) {
+                    searchModal.style.display = 'none';
+                }
+            });
+
+            // Search input handler
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+
+                if (searchTerm.length === 0) {
+                    searchResults.innerHTML = '';
+                    return;
+                }
+
+                const results = [];
+
+                // Search in all menu items
+                document.querySelectorAll('.category-item').forEach(item => {
+                    const name = item.querySelector('.item-name').textContent.toLowerCase();
+                    const description = item.querySelector('.item-description').textContent.toLowerCase();
+                    const price = item.querySelector('.price-amount').textContent;
+                    const id = item.id;
+
+                    if (name.includes(searchTerm) || description.includes(searchTerm)) {
+                        results.push({
+                            name: item.querySelector('.item-name').textContent,
+                            description: item.querySelector('.item-description').textContent,
+                            price: price,
+                            id: id
+                        });
+                    }
+                });
+
+                // Display results
+                displaySearchResults(results);
+            });
+        }
+
+        // Display search results
+        function displaySearchResults(results) {
+            searchResults.innerHTML = '';
+
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item">No results found</div>';
+                return;
+            }
+
+            results.forEach(result => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'search-result-item';
+                resultItem.innerHTML = `
+                    <div class="search-result-name">${result.name}</div>
+                    <div class="search-result-description">${result.description}</div>
+                    <div class="search-result-price">${result.price}</div>
+                `;
+
+                resultItem.addEventListener('click', () => {
+                    // Close search modal
+                    searchModal.style.display = 'none';
+
+                    // Scroll to the item
+                    const itemElement = document.getElementById(result.id);
+                    if (itemElement) {
+                        itemElement.scrollIntoView({ behavior: 'smooth' });
+
+                        // Highlight the item
+                        itemElement.style.backgroundColor = '#FFF5F5';
+                        setTimeout(() => {
+                            itemElement.style.backgroundColor = '';
+                        }, 2000);
+                    }
+                });
+
+                searchResults.appendChild(resultItem);
+            });
+        }
+
+        // Share page function
+        function sharePage() {
+            const pageTitle = document.title;
+            const pageUrl = window.location.href;
+
+            if (navigator.share) {
+                // Use Web Share API if available
+                navigator.share({
+                    title: pageTitle,
+                    text: 'Check out this restaurant menu!',
+                    url: pageUrl,
+                })
+                    .catch(err => {
+                        console.log('Error sharing:', err);
+                        copyToClipboard(pageUrl);
+                    });
+            } else {
+                // Fallback to copying URL to clipboard
+                copyToClipboard(pageUrl);
+            }
+        }
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Link copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy link. Please copy manually.');
+            });
+        }
+
+        // Setup scroll observer for sections
+        function setupScrollObserver() {
+            const sections = document.querySelectorAll('.category-items-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+
+                        // Update active category in navigation
+                        const categoryId = entry.target.id;
+                        document.querySelectorAll('.category').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        const categoryBtn = document.querySelector(`[data-category="${categoryId}"]`);
+                        if (categoryBtn) {
+                            categoryBtn.classList.add('active');
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Back button
+            backBtn.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+
+            // Share button
+            shareBtn.addEventListener('click', sharePage);
+
+            // View cart button
+            viewCartBtn.addEventListener('click', () => {
+                window.location.href = 'checkout.html';
+            });
+
+            // Add event listeners to all add buttons
+            document.querySelectorAll('.item-add-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productName = button.getAttribute('data-name');
+                    const product = productsData[productName];
+
+                    if (product) {
+                        addToCart(productName, product);
+                    }
+                });
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && searchModal.style.display === 'flex') {
+                    searchModal.style.display = 'none';
+                }
+                if (e.ctrlKey && e.key === 'f') {
+                    e.preventDefault();
+                    searchModal.style.display = 'flex';
+                    searchInput.focus();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #8B0000;
+            --primary-red-light: #a52a2a;
+            --primary-red-dark: #660000;
+            --accent-gold: #D4AF37;
+            --text-dark: #2C3E50;
+            --text-light: #7F8C8D;
+            --bg-light: #F9F9F9;
+            --border-light: #ECF0F1;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Restaurant Branding */
+        .restaurant-brand {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: var(--shadow);
+        }
+
+        .restaurant-brand.pizza-hut {
+            background: linear-gradient(135deg, #8B0000 0%, #660000 100%);
+            color: white;
+        }
+
+        .restaurant-brand.hysushi {
+            background: linear-gradient(135deg, #8B4513 0%, #556B2F 100%);
+            color: white;
+        }
+
+        .restaurant-brand.mcdonalds {
+            background: linear-gradient(135deg, #DA291C 0%, #FFBC0D 100%);
+            color: white;
+        }
+
+        .restaurant-brand.kfc {
+            background: linear-gradient(135deg, #8B0000 0%, #660000 100%);
+            color: white;
+        }
+
+        .restaurant-brand.burgerking {
+            background: linear-gradient(135deg, #FF7F00 0%, #E57200 100%);
+            color: white;
+        }
+
+        .restaurant-logo {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .restaurant-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .restaurant-tagline {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Fixed Back Button */
+        .back-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: var(--primary-red);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-red-dark);
+            transform: translateX(-3px);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-top: 10px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Cart Layout */
+        .cart-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cart-items {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .cart-summary {
+            width: 320px;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            align-self: flex-start;
+        }
+
+        /* Cart Items */
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .cart-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .clear-cart {
+            color: var(--primary-red);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .clear-cart:hover {
+            background: rgba(139, 0, 0, 0.1);
+        }
+
+        /* Item Card - Compact Design */
+        .item-card {
+            display: flex;
+            gap: 12px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-light);
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .item-card:hover {
+            background: rgba(139, 0, 0, 0.02);
+        }
+
+        .item-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-desc {
+            color: var(--text-light);
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.3;
+        }
+
+        .item-price {
+            color: var(--primary-red);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .quantity-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+            font-size: 0.8rem;
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        .item-quantity {
+            font-weight: 600;
+            min-width: 26px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .remove-item {
+            color: #e74c3c;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .remove-item:hover {
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        /* Customization Badges */
+        .customization-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 4px;
+            margin-bottom: 6px;
+        }
+
+        .customization-badge {
+            background: rgba(139, 0, 0, 0.1);
+            color: var(--primary-red);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Special Instructions */
+        .special-instructions {
+            color: var(--text-light);
+            font-size: 0.75rem;
+            font-style: italic;
+            margin-top: 4px;
+            padding: 3px 8px;
+            background: rgba(139, 0, 0, 0.05);
+            border-radius: 6px;
+            border-left: 2px solid var(--primary-red);
+        }
+
+        /* Cart Summary */
+        .summary-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        .summary-label {
+            color: var(--text-light);
+        }
+
+        .summary-value {
+            font-weight: 500;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 15px 0;
+            border-top: 2px solid var(--primary-red);
+            border-bottom: 2px solid var(--primary-red);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .total-label {
+            color: var(--text-dark);
+        }
+
+        .total-price {
+            color: var(--primary-red);
+        }
+
+        .delivery-note {
+            background: rgba(139, 0, 0, 0.05);
+            padding: 12px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            border-left: 3px solid var(--primary-red);
+        }
+
+        .delivery-note i {
+            color: var(--primary-red);
+            margin-right: 8px;
+        }
+
+        /* Payment Method */
+        .payment-method {
+            margin: 20px 0;
+        }
+
+        .payment-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary-red);
+            background: rgba(139, 0, 0, 0.05);
+        }
+
+        .payment-option input {
+            accent-color: var(--primary-red);
+            transform: scale(0.9);
+        }
+
+        .payment-option label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .payment-icon {
+            color: var(--primary-red);
+            font-size: 1rem;
+        }
+
+        /* Checkout Button */
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(139, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(139, 0, 0, 0.35);
+        }
+
+        .checkout-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .empty-cart i {
+            font-size: 4rem;
+            color: var(--border-light);
+            margin-bottom: 15px;
+        }
+
+        .empty-cart p {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .browse-btn {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .browse-btn:hover {
+            background: var(--primary-red-dark);
+        }
+
+        /* Info Text */
+        .info-text {
+            text-align: center;
+            margin-top: 12px;
+            color: var(--text-light);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .info-text i {
+            margin-right: 4px;
+        }
+
+        /* Customer Information Form */
+        .customer-info {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .customer-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-red);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background-color: #F9F9F9;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            background-color: white;
+            box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .optional-note {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-left: 5px;
+            font-weight: normal;
+        }
+
+        /* Delivery Time Selection */
+        .delivery-time {
+            margin-bottom: 15px;
+        }
+
+        .time-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .time-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+        }
+
+        .time-option.selected {
+            border-color: var(--primary-red);
+            background: rgba(139, 0, 0, 0.05);
+            font-weight: 500;
+        }
+
+        .time-option i {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--primary-red);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .cart-container {
+                flex-direction: column;
+            }
+
+            .cart-summary {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .cart-items,
+            .cart-summary {
+                padding: 18px;
+                border-radius: 14px;
+            }
+
+            .item-card {
+                flex-direction: row;
+                text-align: left;
+                gap: 10px;
+            }
+
+            .item-image {
+                width: 60px;
+                height: 60px;
+            }
+
+            .item-controls {
+                justify-content: flex-start;
+            }
+
+            .remove-item {
+                margin-left: 0;
+                margin-top: 0;
+                width: auto;
+                justify-content: flex-start;
+            }
+
+            .payment-option {
+                padding: 10px;
+            }
+
+            .time-options {
+                flex-direction: column;
+            }
+
+            .time-option {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Restaurant Branding (will be set dynamically) -->
+        <div class="restaurant-brand" id="restaurantBrand">
+            <div class="restaurant-logo" id="restaurantLogo">🍕</div>
+            <div class="restaurant-name" id="restaurantName">Loading...</div>
+            <div class="restaurant-tagline" id="restaurantTagline">Checkout</div>
+        </div>
+
+        <!-- Fixed Back Button -->
+        <div class="back-btn" id="back-button">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>Checkout</h1>
+            <p>Review your order and complete your purchase</p>
+        </div>
+
+        <!-- Cart Layout -->
+        <div class="cart-container">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <div class="cart-header">
+                    <h2 id="cart-count">Order Items (0)</h2>
+                    <button class="clear-cart" id="clear-cart">
+                        <i class="fas fa-trash-alt"></i> Clear All
+                    </button>
+                </div>
+
+                <div id="cart-items-container">
+                    <!-- Items will be added dynamically by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="cart-summary">
+                <h2 class="summary-title">Order Summary</h2>
+
+                <div class="summary-item">
+                    <span class="summary-label">Subtotal</span>
+                    <span class="summary-value" id="subtotal">0.00 MAD</span>
+                </div>
+
+                <div class="summary-total">
+                    <span class="total-label">Total Items</span>
+                    <span class="total-price" id="total-price">0.00 MAD</span>
+                </div>
+
+                <!-- Clarification message -->
+                <div class="delivery-note">
+                    <i class="fas fa-info-circle"></i>
+                    <span>This total does not include delivery charges. Delivery fee will be calculated based on your
+                        location.</span>
+                </div>
+
+                <!-- Customer Information (Optional) -->
+                <div class="customer-info" style="margin-bottom: 20px;">
+                    <h3>Delivery Information <span class="optional-note">(Optional)</span></h3>
+                    <div class="form-group">
+                        <label for="customerName">Full Name <span class="optional-note">(optional)</span></label>
+                        <input type="text" id="customerName" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerAddress">Delivery Address <span
+                                class="optional-note">(optional)</span></label>
+                        <textarea id="customerAddress" placeholder="Enter your delivery address"></textarea>
+                    </div>
+                    <div class="delivery-time">
+                        <label
+                            style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 10px; color: var(--text-dark);">Delivery
+                            Time <span class="optional-note">(optional)</span></label>
+                        <div class="time-options">
+                            <div class="time-option selected" data-time="asap">
+                                <i class="fas fa-bolt"></i>
+                                <span>ASAP (25-35 min)</span>
+                            </div>
+                            <div class="time-option" data-time="later">
+                                <i class="far fa-clock"></i>
+                                <span>Schedule Later</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="payment-method">
+                    <h3 class="payment-title">Payment Method</h3>
+
+                    <div class="payment-option selected">
+                        <input type="radio" id="cash" name="payment" checked>
+                        <label for="cash">Cash on Delivery</label>
+                        <div class="payment-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="checkout-btn" id="checkout-btn">
+                    <i class="fab fa-whatsapp"></i> Complete Order via WhatsApp
+                </button>
+
+                <p class="info-text">
+                    <i class="fas fa-info-circle"></i> We'll contact you via WhatsApp to confirm your order details and
+                    delivery charges.
+                </p>
+            </div>
+        </div>
+
+        <!-- Debug Button (Remove this in production) -->
+        <button onclick="debugCart()" style="
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 8px 15px;
+            background: #666;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            🐛 Debug
+        </button>
+    </div>
+
+    <script>
+        const RESTAURANTS = {
+            'pizzahut': {
+                name: 'Pizza Hut',
+                logo: '🍕',
+                tagline: 'Delicious pizzas delivered to your door',
+                cartKey: 'pizzahutCart',
+                customerInfoKey: 'pizzahutCustomerInfo',
+                whatsappNumber: '212642620325',
+                emoji: '🍕',
+                backLink: 'pizzahut.html',
+                browseLink: 'pizzahut.html'
+            },
+            'hysushi': {
+                name: 'Hysushi',
+                logo: '🍣',
+                tagline: 'Fresh Japanese Cuisine',
+                cartKey: 'unifiedCart',
+                customerInfoKey: 'hysushiCustomerInfo',
+                whatsappNumber: '212642620325',
+                emoji: '🍣',
+                backLink: 'hysushi.html',
+                browseLink: 'hysushi.html'
+            },
+            'mcdonalds': {
+                name: 'McDonald\'s',
+                logo: '🍔',
+                tagline: 'Fast Food Delivery',
+                cartKey: 'unifiedCart',
+                customerInfoKey: 'mcdonaldsCustomerInfo',
+                whatsappNumber: '212642620325',
+                emoji: '🍔',
+                backLink: 'menumcdo.html',
+                browseLink: 'menumcdo.html'
+            },
+            'kfc': {
+                name: 'KFC',
+                logo: '🍗',
+                tagline: 'Finger Lickin\' Good Chicken',
+                cartKey: 'unifiedCart',
+                customerInfoKey: 'kfcCustomerInfo',
+                whatsappNumber: '212642620325',
+                emoji: '🍗',
+                backLink: 'kfc.html',
+                browseLink: 'kfc.html'
+            },
+            'burgerking': {
+                name: 'Burger King',
+                logo: '🍔',
+                tagline: 'Flame-Grilled Burgers',
+                cartKey: 'unifiedCart',
+                customerInfoKey: 'burgerkingCustomerInfo',
+                whatsappNumber: '212642620325',
+                emoji: '🍔',
+                backLink: 'Burger King.html',
+                browseLink: 'Burger King.html'
+            }
+        };
+
+        // Global variables
+        let currentRestaurant = null;
+        let cart = [];
+        let customerInfo = {
+            name: "",
+            address: "",
+            deliveryTime: "asap"
+        };
+
+        // DOM elements
+        const restaurantBrand = document.getElementById('restaurantBrand');
+        const restaurantLogo = document.getElementById('restaurantLogo');
+        const restaurantName = document.getElementById('restaurantName');
+        const restaurantTagline = document.getElementById('restaurantTagline');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartCount = document.getElementById('cart-count');
+        const subtotalElement = document.getElementById('subtotal');
+        const totalPriceElement = document.getElementById('total-price');
+        const clearCartBtn = document.getElementById('clear-cart');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const backButton = document.getElementById('back-button');
+        const customerNameInput = document.getElementById('customerName');
+        const customerAddressInput = document.getElementById('customerAddress');
+        const timeOptions = document.querySelectorAll('.time-option');
+
+        function detectRestaurant() {
+            console.log("Detecting restaurant...");
+
+            // Check Pizza Hut cart first (since it's separate)
+            const pizzahutCart = localStorage.getItem('pizzahutCart');
+            let pizzahutItems = [];
+
+            try {
+                pizzahutItems = pizzahutCart ? JSON.parse(pizzahutCart) : [];
+            } catch (error) {
+                console.error("Error parsing Pizza Hut cart data:", error);
+            }
+
+            console.log("Pizza Hut items:", pizzahutItems.length);
+
+            // If Pizza Hut has items, that's the current restaurant
+            if (pizzahutItems.length > 0) {
+                console.log("Pizza Hut cart has items, using Pizza Hut");
+                return 'pizzahut';
+            }
+
+            // Check unified cart for other restaurants
+            const unifiedCart = localStorage.getItem('unifiedCart');
+            let allUnifiedItems = [];
+
+            try {
+                allUnifiedItems = unifiedCart ? JSON.parse(unifiedCart) : [];
+            } catch (error) {
+                console.error("Error parsing unified cart data:", error);
+            }
+
+            console.log("Unified cart items:", allUnifiedItems.length);
+
+            // Filter items by restaurant
+            const hysushiItems = allUnifiedItems.filter(item =>
+                item.restaurantId === 'hysushi' ||
+                item.restaurantName === 'Hysushi'
+            );
+
+            const mcdonaldsItems = allUnifiedItems.filter(item =>
+                item.restaurantId === 'mcdonalds' ||
+                item.restaurantName === 'McDonald\'s'
+            );
+
+            const kfcItems = allUnifiedItems.filter(item =>
+                item.restaurantId === 'kfc' ||
+                item.restaurantName === 'KFC Marrakech' ||
+                item.restaurantName === 'KFC'
+            );
+
+            const burgerkingItems = allUnifiedItems.filter(item =>
+                item.restaurantId === 'burgerking' ||
+                item.restaurantName === 'Burger King'
+            );
+
+            console.log("Hysushi items:", hysushiItems.length);
+            console.log("McDonald's items:", mcdonaldsItems.length);
+            console.log("KFC items:", kfcItems.length);
+            console.log("Burger King items:", burgerkingItems.length);
+
+            // Check each restaurant in order of priority
+            if (hysushiItems.length > 0) return 'hysushi';
+            if (mcdonaldsItems.length > 0) return 'mcdonalds';
+            if (kfcItems.length > 0) return 'kfc';
+            if (burgerkingItems.length > 0) return 'burgerking';
+
+            // Default to Pizza Hut if nothing else
+            return 'pizzahut';
+        }
+
+        function initRestaurant() {
+            currentRestaurant = detectRestaurant();
+            const restaurant = RESTAURANTS[currentRestaurant];
+
+            restaurantLogo.textContent = restaurant.logo;
+            restaurantName.textContent = restaurant.name;
+            restaurantTagline.textContent = restaurant.tagline;
+
+            restaurantBrand.className = 'restaurant-brand';
+
+            if (currentRestaurant === 'pizzahut') {
+                restaurantBrand.classList.add('pizza-hut');
+                checkoutBtn.style.background = 'linear-gradient(135deg, #8B0000 0%, #660000 100%)';
+            } else if (currentRestaurant === 'hysushi') {
+                restaurantBrand.classList.add('hysushi');
+                checkoutBtn.style.background = 'linear-gradient(135deg, #8B4513 0%, #556B2F 100%)';
+            } else if (currentRestaurant === 'mcdonalds') {
+                restaurantBrand.classList.add('mcdonalds');
+                checkoutBtn.style.background = 'linear-gradient(135deg, #DA291C 0%, #FFBC0D 100%)';
+            } else if (currentRestaurant === 'kfc') {
+                restaurantBrand.classList.add('kfc');
+                checkoutBtn.style.background = 'linear-gradient(135deg, #8B0000 0%, #660000 100%)';
+            } else if (currentRestaurant === 'burgerking') {
+                restaurantBrand.classList.add('mcdonalds');
+                checkoutBtn.style.background = 'linear-gradient(135deg, #FF7F00 0%, #E57200 100%)';
+            }
+
+            initCart();
+        }
+
+        function getCart() {
+            try {
+                const cartKey = RESTAURANTS[currentRestaurant].cartKey;
+                const cartData = localStorage.getItem(cartKey);
+                const allItems = cartData ? JSON.parse(cartData) : [];
+
+                if (currentRestaurant === 'hysushi') {
+                    return allItems.filter(item =>
+                        item.restaurantId === 'hysushi' ||
+                        item.restaurantName === 'Hysushi'
+                    );
+                } else if (currentRestaurant === 'mcdonalds') {
+                    return allItems.filter(item =>
+                        item.restaurantId === 'mcdonalds' ||
+                        item.restaurantName === 'McDonald\'s'
+                    );
+                } else if (currentRestaurant === 'kfc') {
+                    return allItems.filter(item =>
+                        item.restaurantId === 'kfc' ||
+                        item.restaurantName === 'KFC Marrakech' ||
+                        item.restaurantName === 'KFC'
+                    );
+                } else if (currentRestaurant === 'burgerking') {
+                    return allItems.filter(item =>
+                        item.restaurantId === 'burgerking' ||
+                        item.restaurantName === 'Burger King'
+                    );
+                }
+
+                return allItems;
+            } catch (error) {
+                console.error("Error loading cart from localStorage:", error);
+                return [];
+            }
+        }
+
+        function saveCart() {
+            const cartKey = RESTAURANTS[currentRestaurant].cartKey;
+
+            if (currentRestaurant === 'hysushi' || currentRestaurant === 'mcdonalds' || currentRestaurant === 'kfc' || currentRestaurant === 'burgerking') {
+                const allItems = JSON.parse(localStorage.getItem(cartKey) || '[]');
+
+                const otherItems = allItems.filter(item => {
+                    if (currentRestaurant === 'hysushi') {
+                        return item.restaurantId !== 'hysushi' && item.restaurantName !== 'Hysushi';
+                    } else if (currentRestaurant === 'mcdonalds') {
+                        return item.restaurantId !== 'mcdonalds' && item.restaurantName !== 'McDonald\'s';
+                    } else if (currentRestaurant === 'kfc') {
+                        return item.restaurantId !== 'kfc' &&
+                            item.restaurantName !== 'KFC Marrakech' &&
+                            item.restaurantName !== 'KFC';
+                    } else if (currentRestaurant === 'burgerking') {
+                        return item.restaurantId !== 'burgerking' &&
+                            item.restaurantName !== 'Burger King';
+                    }
+                    return true;
+                });
+
+                const itemsWithId = cart.map(item => ({
+                    ...item,
+                    restaurantId: currentRestaurant,
+                    restaurantName: RESTAURANTS[currentRestaurant].name
+                }));
+
+                const updatedItems = [...otherItems, ...itemsWithId];
+                localStorage.setItem(cartKey, JSON.stringify(updatedItems));
+            } else {
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+            }
+        }
+
+        // Convert customizations to display text - FIXED VERSION (NO DUPLICATES)
+        function formatCustomizationsForDisplay(item) {
+            let customizations = [];
+
+            // Handle KFC customizations
+            if (currentRestaurant === 'kfc' && item.customizations && Object.keys(item.customizations).length > 0) {
+                const custom = item.customizations;
+
+                // Handle Bucket Jma3a specifically
+                if (item.name.includes('Bucket Jma3a')) {
+                    // Wings
+                    if (custom.wingsOriginal !== undefined && custom.wingsSpicy !== undefined) {
+                        customizations.push(`🍗 Wings: ${custom.wingsOriginal} Original, ${custom.wingsSpicy} Spicy`);
+                    }
+
+                    // Strips
+                    if (custom.stripsOriginal !== undefined && custom.stripsSpicy !== undefined) {
+                        customizations.push(`🥩 Strips: ${custom.stripsOriginal} Original, ${custom.stripsSpicy} Spicy`);
+                    }
+
+                    // Side
+                    if (custom.side === 'family-fries') {
+                        customizations.push(`🍟 Side: Family Fries`);
+                    }
+
+                    // Sauces (3 specific ones for Bucket Jma3a)
+                    const sauceMap = {
+                        'mayonnaise': '🥫 Mayonnaise Packet',
+                        'chili-mayo': '🌶️ Small Chili Mayo Sauce',
+                        'pepper-mayo': '🫑 Pepper Mayo Sauce'
+                    };
+
+                    if (custom.sauce) {
+                        customizations.push(sauceMap[custom.sauce] || custom.sauce);
+                    }
+                    if (custom.sauce2) {
+                        customizations.push(sauceMap[custom.sauce2] || custom.sauce2);
+                    }
+                    if (custom.sauce3) {
+                        customizations.push(sauceMap[custom.sauce3] || custom.sauce3);
+                    }
+
+                    // Add On
+                    if (custom.addon === 'no-addon') {
+                        customizations.push(`❌ No Add On`);
+                    }
+                }
+                // Handle other KFC products
+                else {
+                    // Handle strips quantities
+                    if (custom.stripsOriginal !== undefined && custom.stripsSpicy !== undefined) {
+                        customizations.push(`🥩 Strips: ${custom.stripsOriginal} Original, ${custom.stripsSpicy} Spicy`);
+                    }
+
+                    // Handle chicken quantities
+                    if (custom.chickenOriginal !== undefined && custom.chickenSpicy !== undefined) {
+                        customizations.push(`🍗 Chicken: ${custom.chickenOriginal} Original, ${custom.chickenSpicy} Spicy`);
+                    }
+
+                    // Handle wings
+                    if (custom.wingsOriginal !== undefined && custom.wingsSpicy !== undefined) {
+                        customizations.push(`🍗 Wings: ${custom.wingsOriginal} Original, ${custom.wingsSpicy} Spicy`);
+                    }
+
+                    // Handle bucket option
+                    if (custom.bucketOption) {
+                        const bucketText = custom.bucketOption === 'strips-only' ? 'Strips Only' :
+                            custom.bucketOption === 'with-bucket' ? 'With Bucket' : custom.bucketOption;
+                        customizations.push(`🪣 Bucket: ${bucketText}`);
+                    }
+
+                    // Handle side items
+                    if (custom.side) {
+                        const sideMap = {
+                            'family-fries': '🍟 Family Fries',
+                            'regular-fries': '🍟 Regular Fries',
+                            'coleslaw-large': '🥗 Coleslaw Large',
+                            'coleslaw-small': '🥗 Coleslaw Small'
+                        };
+                        customizations.push(sideMap[custom.side] || custom.side);
+                    }
+
+                    if (custom.secondSide) {
+                        const sideMap = {
+                            'family-fries': '🍟 Family Fries',
+                            'regular-fries': '🍟 Regular Fries',
+                            'coleslaw-large': '🥗 Coleslaw Large',
+                            'coleslaw-small': '🥗 Coleslaw Small'
+                        };
+                        customizations.push(sideMap[custom.secondSide] || custom.secondSide);
+                    }
+
+                    // Handle dips
+                    if (custom.dips && typeof custom.dips === 'object' && Object.keys(custom.dips).length > 0) {
+                        const dipNames = [];
+                        Object.values(custom.dips).forEach(dipId => {
+                            if (dipId && typeof dipId === 'string') {
+                                const dipMap = {
+                                    'dynamite': '💥 Dynamite Sauce',
+                                    'spicy-bbq': '🔥 Spicy BBQ Sauce',
+                                    'sweet-chilli': '🌶️ Sweet Chilli Sauce',
+                                    'mayonnaise': '🥫 Mayonnaise',
+                                    'chili-mayo': '🌶️ Chili Mayo'
+                                };
+                                dipNames.push(dipMap[dipId] || dipId);
+                            }
+                        });
+                        if (dipNames.length > 0) {
+                            customizations.push(`🥫 Dips: ${dipNames.join(', ')}`);
+                        }
+                    }
+
+                    // Handle sauces
+                    if (custom.sauce && !item.name.includes('Bucket Jma3a')) {
+                        const sauceMap = {
+                            'dynamite': '💥 Dynamite Sauce',
+                            'spicy-bbq': '🔥 Spicy BBQ Sauce',
+                            'sweet-chilli': '🌶️ Sweet Chilli Sauce',
+                            'mayonnaise': '🥫 Mayonnaise',
+                            'chili-mayo': '🌶️ Chili Mayo',
+                            'rizo-arabitta': '🍝 Rizo Arabitta Sauce',
+                            'rizo-chilli': '🌶️ Rizo Chilli Sauce'
+                        };
+                        customizations.push(`🥫 Sauce: ${sauceMap[custom.sauce] || custom.sauce}`);
+                    }
+
+                    // Handle beverage
+                    if (custom.beverage) {
+                        const bevMap = {
+                            'pepsi-1l': '🥤 Pepsi 1L',
+                            'pepsi-1.5l': '🥤 Pepsi 1.5L',
+                            'mirinda-1l': '🥤 Mirinda 1L',
+                            'mirinda-1.5l': '🥤 Mirinda 1.5L',
+                            '7up-1l': '🥤 7Up 1L',
+                            '7up-1.5l': '🥤 7Up 1.5L',
+                            'pepsi-can': '🥤 Pepsi Can',
+                            '7up-can': '🥤 7Up Can',
+                            'mirinda-can': '🥤 Mirinda Can',
+                            'pepsi-regular': '🥤 Pepsi Regular',
+                            'diet-pepsi-regular': '🥤 Diet Pepsi Regular',
+                            '7up-regular': '🥤 7Up Regular',
+                            'mirinda-regular': '🥤 Mirinda Regular',
+                            'water': '💧 Water',
+                            'mojito': '🍹 Mojito'
+                        };
+                        customizations.push(bevMap[custom.beverage] || custom.beverage);
+                    }
+
+                    // Handle extra side
+                    if (custom.extraSide === 'fries') {
+                        customizations.push(`➕ Extra Fries`);
+                    }
+
+                    // Handle sandwich selections
+                    if (custom.sandwich) {
+                        const sandwichMap = {
+                            'royal-original': '👑 Royal Original',
+                            'royal-spicy': '👑 Royal Spicy',
+                            'mighty-original': '💪 Mighty Original',
+                            'mighty-spicy': '💪 Mighty Spicy',
+                            'twister': '🌀 Twister',
+                            'twister-original': '🌀 Twister Original',
+                            'twister-spicy': '🌀 Twister Spicy',
+                            'cruncher': '💥 Cruncher'
+                        };
+                        customizations.push(`🥪 Sandwich: ${sandwichMap[custom.sandwich] || custom.sandwich}`);
+                    }
+
+                    // Handle flavor
+                    if (custom.flavor) {
+                        const flavorMap = {
+                            'original': 'Original',
+                            'spicy': 'Spicy',
+                            'mix': 'Mix'
+                        };
+                        customizations.push(`🌶️ Flavor: ${flavorMap[custom.flavor] || custom.flavor}`);
+                    }
+
+                    // Handle size
+                    if (custom.size) {
+                        customizations.push(`📏 Size: ${custom.size === 'regular' ? 'Regular' : 'Large'}`);
+                    }
+
+                    // Handle condiments
+                    if (custom.condimentEnabled) {
+                        customizations.push(`🧀 American Cheese: ${custom.condimentOption === 'extra' ? 'Extra' : 'Regular'}`);
+                    }
+                }
+            }// Handle Pizza Hut customizations
+            else if (currentRestaurant === 'pizzahut' && item.customizations) {
+                // Show size
+                if (item.customizations.size) {
+                    customizations.push(`📏 Size: ${item.customizations.size}`);
+                }
+
+                // Show base/crust
+                if (item.customizations.base) {
+                    customizations.push(`🍞 Base: ${item.customizations.base}`);
+                }
+
+                // Show extras
+                if (item.customizations.extras && item.customizations.extras.length > 0) {
+                    customizations.push(`➕ Extras: ${item.customizations.extras.join(', ')}`);
+                }
+            }
+            // Handle Hysushi customizations
+            else if (currentRestaurant === 'hysushi' && item.options) {
+                if (item.options.sauce) {
+                    customizations.push(`Sauce: ${item.options.sauce}`);
+                }
+                if (item.options.rice) {
+                    customizations.push(`Rice: ${item.options.rice}`);
+                }
+                if (item.options.spiceLevel) {
+                    customizations.push(`Spice Level: ${item.options.spiceLevel}`);
+                }
+            }
+            // Handle McDonald's customizations
+            else if (currentRestaurant === 'mcdonalds' && item.options) {
+                if (item.options.size) {
+                    customizations.push(`Size: ${item.options.size}`);
+                }
+                if (item.options.meal) {
+                    customizations.push(`Meal: ${item.options.meal}`);
+                }
+            }
+            // Handle Burger King customizations
+            else if (currentRestaurant === 'burgerking' && item.options) {
+                if (item.options.size) {
+                    customizations.push(`Size: ${item.options.size}`);
+                }
+                if (item.options.extras) {
+                    customizations.push(`Extras: ${item.options.extras}`);
+                }
+            }
+            // Handle old Pizza Hut style customizations
+            else if (item.customization && item.customization !== "Standard") {
+                if (typeof item.customization === 'string') {
+                    const parts = item.customization.split(',').map(part => part.trim());
+                    parts.forEach(part => {
+                        if (part) {
+                            customizations.push(part);
+                        }
+                    });
+                } else {
+                    customizations.push(item.customization);
+                }
+            }
+
+            return customizations;
+        }
+
+        // Convert customizations to text for message - FIXED VERSION
+        function formatCustomizationsForMessage(item) {
+            let customizationsText = "";
+
+            // Handle KFC customizations
+            if (currentRestaurant === 'kfc' && item.customizations && Object.keys(item.customizations).length > 0) {
+                const custom = item.customizations;
+
+                // Handle Bucket Jma3a specifically
+                if (item.name.includes('Bucket Jma3a')) {
+                    // Wings
+                    if (custom.wingsOriginal !== undefined && custom.wingsSpicy !== undefined) {
+                        customizationsText += `   • Wings: ${custom.wingsOriginal} Original, ${custom.wingsSpicy} Spicy\n`;
+                    }
+
+                    // Strips
+                    if (custom.stripsOriginal !== undefined && custom.stripsSpicy !== undefined) {
+                        customizationsText += `   • Strips: ${custom.stripsOriginal} Original, ${custom.stripsSpicy} Spicy\n`;
+                    }
+
+                    // Side
+                    if (custom.side === 'family-fries') {
+                        customizationsText += `   • Side: Family Fries\n`;
+                    }
+
+                    // Sauces
+                    const sauceMap = {
+                        'mayonnaise': 'Mayonnaise Packet',
+                        'chili-mayo': 'Small Chili Mayo Sauce',
+                        'pepper-mayo': 'Pepper Mayo Sauce'
+                    };
+
+                    if (custom.sauce) {
+                        customizationsText += `   • Sauce 1: ${sauceMap[custom.sauce] || custom.sauce}\n`;
+                    }
+                    if (custom.sauce2) {
+                        customizationsText += `   • Sauce 2: ${sauceMap[custom.sauce2] || custom.sauce2}\n`;
+                    }
+                    if (custom.sauce3) {
+                        customizationsText += `   • Sauce 3: ${sauceMap[custom.sauce3] || custom.sauce3}\n`;
+                    }
+
+                    // Add On
+                    if (custom.addon === 'no-addon') {
+                        customizationsText += `   • Add On: No Add On\n`;
+                    }
+                }
+                // Handle other KFC products
+                else {
+                    // Handle strips quantities
+                    if (custom.stripsOriginal !== undefined && custom.stripsSpicy !== undefined) {
+                        customizationsText += `   • Strips: ${custom.stripsOriginal} Original, ${custom.stripsSpicy} Spicy\n`;
+                    }
+
+                    // Handle chicken quantities
+                    if (custom.chickenOriginal !== undefined && custom.chickenSpicy !== undefined) {
+                        customizationsText += `   • Chicken: ${custom.chickenOriginal} Original, ${custom.chickenSpicy} Spicy\n`;
+                    }
+
+                    // Handle wings
+                    if (custom.wingsOriginal !== undefined && custom.wingsSpicy !== undefined) {
+                        customizationsText += `   • Wings: ${custom.wingsOriginal} Original, ${custom.wingsSpicy} Spicy\n`;
+                    }
+
+                    // Handle bucket option
+                    if (custom.bucketOption) {
+                        const bucketText = custom.bucketOption === 'strips-only' ? 'Strips Only' :
+                            custom.bucketOption === 'with-bucket' ? 'With Bucket' : custom.bucketOption;
+                        customizationsText += `   • Bucket: ${bucketText}\n`;
+                    }
+
+                    // Handle side items
+                    if (custom.side) {
+                        const sideMap = {
+                            'family-fries': 'Family Fries',
+                            'regular-fries': 'Regular Fries',
+                            'coleslaw-large': 'Coleslaw Large',
+                            'coleslaw-small': 'Coleslaw Small'
+                        };
+                        customizationsText += `   • Side: ${sideMap[custom.side] || custom.side}\n`;
+                    }
+
+                    if (custom.secondSide) {
+                        const sideMap = {
+                            'family-fries': 'Family Fries',
+                            'regular-fries': 'Regular Fries',
+                            'coleslaw-large': 'Coleslaw Large',
+                            'coleslaw-small': 'Coleslaw Small'
+                        };
+                        customizationsText += `   • Second Side: ${sideMap[custom.secondSide] || custom.secondSide}\n`;
+                    }
+
+                    // Handle dips
+                    if (custom.dips && typeof custom.dips === 'object' && Object.keys(custom.dips).length > 0) {
+                        const dipNames = [];
+                        Object.values(custom.dips).forEach(dipId => {
+                            if (dipId && typeof dipId === 'string') {
+                                const dipMap = {
+                                    'dynamite': 'Dynamite Sauce',
+                                    'spicy-bbq': 'Spicy BBQ Sauce',
+                                    'sweet-chilli': 'Sweet Chilli Sauce',
+                                    'mayonnaise': 'Mayonnaise',
+                                    'chili-mayo': 'Chili Mayo',
+                                    'rizo-arabitta': 'Rizo Arabitta',
+                                    'rizo-chilli': 'Rizo Chilli'
+                                };
+                                dipNames.push(dipMap[dipId] || dipId);
+                            }
+                        });
+                        if (dipNames.length > 0) {
+                            customizationsText += `   • Dips: ${dipNames.join(', ')}\n`;
+                        }
+                    }
+
+                    // Handle sauces (only if not Bucket Jma3a)
+                    if (custom.sauce && !item.name.includes('Bucket Jma3a')) {
+                        const sauceMap = {
+                            'dynamite': 'Dynamite Sauce',
+                            'spicy-bbq': 'Spicy BBQ Sauce',
+                            'sweet-chilli': 'Sweet Chilli Sauce',
+                            'mayonnaise': 'Mayonnaise',
+                            'chili-mayo': 'Chili Mayo',
+                            'rizo-arabitta': 'Rizo Arabitta Sauce',
+                            'rizo-chilli': 'Rizo Chilli Sauce'
+                        };
+                        customizationsText += `   • Sauce: ${sauceMap[custom.sauce] || custom.sauce}\n`;
+                    }
+
+                    // Handle beverage
+                    if (custom.beverage) {
+                        const bevMap = {
+                            'pepsi-1l': 'Pepsi 1L',
+                            'pepsi-1.5l': 'Pepsi 1.5L',
+                            'mirinda-1l': 'Mirinda 1L',
+                            'mirinda-1.5l': 'Mirinda 1.5L',
+                            '7up-1l': '7Up 1L',
+                            '7up-1.5l': '7Up 1.5L',
+                            'pepsi-can': 'Pepsi Can',
+                            '7up-can': '7Up Can',
+                            'mirinda-can': 'Mirinda Can',
+                            'pepsi-regular': 'Pepsi Regular',
+                            'diet-pepsi-regular': 'Diet Pepsi Regular',
+                            '7up-regular': '7Up Regular',
+                            'mirinda-regular': 'Mirinda Regular',
+                            'water': 'Water',
+                            'mojito': 'Mojito'
+                        };
+                        customizationsText += `   • Drink: ${bevMap[custom.beverage] || custom.beverage}\n`;
+                    }
+
+                    // Handle extra side
+                    if (custom.extraSide === 'fries') {
+                        customizationsText += `   • Extra: Fries\n`;
+                    }
+
+                    // Handle sandwich selections
+                    if (custom.sandwich) {
+                        const sandwichMap = {
+                            'royal-original': 'Royal Original',
+                            'royal-spicy': 'Royal Spicy',
+                            'mighty-original': 'Mighty Original',
+                            'mighty-spicy': 'Mighty Spicy',
+                            'twister': 'Twister',
+                            'twister-original': 'Twister Original',
+                            'twister-spicy': 'Twister Spicy',
+                            'cruncher': 'Cruncher'
+                        };
+                        customizationsText += `   • Sandwich: ${sandwichMap[custom.sandwich] || custom.sandwich}\n`;
+                    }
+
+                    // Handle flavor
+                    if (custom.flavor) {
+                        const flavorMap = {
+                            'original': 'Original',
+                            'spicy': 'Spicy',
+                            'mix': 'Mix'
+                        };
+                        customizationsText += `   • Flavor: ${flavorMap[custom.flavor] || custom.flavor}\n`;
+                    }
+
+                    // Handle size
+                    if (custom.size) {
+                        customizationsText += `   • Size: ${custom.size === 'regular' ? 'Regular' : 'Large'}\n`;
+                    }
+
+                    // Handle condiments
+                    if (custom.condimentEnabled) {
+                        customizationsText += `   • American Cheese: ${custom.condimentOption === 'extra' ? 'Extra' : 'Regular'}\n`;
+                    }
+                }
+            }// Handle Pizza Hut customizations
+            else if (currentRestaurant === 'pizzahut' && item.customizations) {
+                if (item.customizations.size) {
+                    customizationsText += `   • Size: ${item.customizations.size}\n`;
+                }
+                if (item.customizations.base) {
+                    customizationsText += `   • Base: ${item.customizations.base}\n`;
+                }
+                if (item.customizations.extras && item.customizations.extras.length > 0) {
+                    customizationsText += `   • Extras: ${item.customizations.extras.join(', ')}\n`;
+                }
+            }
+            // Handle Hysushi customizations
+            else if (currentRestaurant === 'hysushi' && item.options) {
+                if (item.options.sauce) {
+                    customizationsText += `   • Sauce: ${item.options.sauce}\n`;
+                }
+                if (item.options.rice) {
+                    customizationsText += `   • Rice: ${item.options.rice}\n`;
+                }
+                if (item.options.spiceLevel) {
+                    customizationsText += `   • Spice Level: ${item.options.spiceLevel}\n`;
+                }
+            }
+            // Handle McDonald's customizations
+            else if (currentRestaurant === 'mcdonalds' && item.options) {
+                if (item.options.size) {
+                    customizationsText += `   • Size: ${item.options.size}\n`;
+                }
+                if (item.options.meal) {
+                    customizationsText += `   • Meal: ${item.options.meal}\n`;
+                }
+            }
+            // Handle Burger King customizations
+            else if (currentRestaurant === 'burgerking' && item.options) {
+                if (item.options.size) {
+                    customizationsText += `   • Size: ${item.options.size}\n`;
+                }
+                if (item.options.extras) {
+                    customizationsText += `   • Extras: ${item.options.extras}\n`;
+                }
+            }
+            // Handle old customization text
+            else if (item.customization && item.customization !== "Standard") {
+                if (typeof item.customization === 'string') {
+                    const parts = item.customization.split(',').map(part => part.trim());
+                    parts.forEach(part => {
+                        if (part) {
+                            customizationsText += `   • ${part}\n`;
+                        }
+                    });
+                } else {
+                    customizationsText += `   • ${item.customization}\n`;
+                }
+            }
+
+            return customizationsText;
+        }
+
+        // Initialize the cart
+        function initCart() {
+            cart = getCart();
+            renderCartItems();
+            updateCartDisplay();
+            attachEventListeners();
+            loadCustomerInfo();
+        }
+
+        // Render cart items in the UI
+        function renderCartItems() {
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                const restaurant = RESTAURANTS[currentRestaurant];
+                cartItemsContainer.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Your cart is empty</p>
+                    <a href="${restaurant.browseLink}" class="browse-btn">Browse ${restaurant.name} Menu</a>
+                </div>
+            `;
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item-card';
+                itemElement.setAttribute('data-id', index);
+
+                const customizations = formatCustomizationsForDisplay(item);
+
+                const pricePerUnit = item.price || (item.totalPrice / item.quantity);
+                const totalItemPrice = pricePerUnit * item.quantity;
+
+                if (item.totalPrice !== totalItemPrice) {
+                    item.totalPrice = totalItemPrice;
+                }
+
+                itemElement.innerHTML = `
+                <div class="item-image">
+                    <img src="${item.img || 'https://via.placeholder.com/70x70/eee/999?text=' + RESTAURANTS[currentRestaurant].emoji}" alt="${item.name}">
+                </div>
+                <div class="item-details">
+                    <div class="item-name">${item.name}</div>
+                    
+                    ${customizations.length > 0 ?
+                        `<div class="customization-badges">
+                            ${customizations.map(custom => `<span class="customization-badge">${custom}</span>`).join('')}
+                        </div>`
+                        : ''
+                    }
+                    
+                    ${item.specialInstructions ?
+                        `<div class="special-instructions">Note: ${item.specialInstructions}</div>`
+                        : ''
+                    }
+                    
+                    <div class="item-price">${pricePerUnit.toFixed(2)} MAD x ${item.quantity} = ${item.totalPrice.toFixed(2)} MAD</div>
+                    <div class="item-controls">
+                        <button class="quantity-btn minus-btn"><i class="fas fa-minus"></i></button>
+                        <span class="item-quantity">${item.quantity}</span>
+                        <button class="quantity-btn plus-btn"><i class="fas fa-plus"></i></button>
+                        <button class="remove-item"><i class="fas fa-times"></i> Remove</button>
+                    </div>
+                </div>
+            `;
+
+                cartItemsContainer.appendChild(itemElement);
+            });
+
+            saveCart();
+        }
+
+        // Calculate cart totals
+        function calculateTotals() {
+            const subtotal = cart.reduce((sum, item) => {
+                const pricePerUnit = item.price || (item.totalPrice / item.quantity);
+                const itemTotal = pricePerUnit * item.quantity;
+
+                if (item.totalPrice !== itemTotal) {
+                    item.totalPrice = itemTotal;
+                }
+
+                return sum + itemTotal;
+            }, 0);
+
+            const total = subtotal;
+
+            return {
+                subtotal: subtotal.toFixed(2),
+                total: total.toFixed(2)
+            };
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            const totals = calculateTotals();
+
+            subtotalElement.textContent = `${totals.subtotal} MAD`;
+            totalPriceElement.textContent = `${totals.total} MAD`;
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = `Order Items (${totalItems})`;
+        }
+
+        // Update item quantity
+        function updateQuantity(itemIndex, change) {
+            if (cart[itemIndex]) {
+                cart[itemIndex].quantity += change;
+
+                if (cart[itemIndex].quantity < 1) {
+                    cart[itemIndex].quantity = 1;
+                }
+
+                const pricePerUnit = cart[itemIndex].price || (cart[itemIndex].totalPrice / (cart[itemIndex].quantity - change));
+                cart[itemIndex].totalPrice = pricePerUnit * cart[itemIndex].quantity;
+
+                if (cart[itemIndex].quantity === 0) {
+                    removeItem(itemIndex);
+                    return;
+                }
+
+                saveCart();
+                renderCartItems();
+                updateCartDisplay();
+            }
+        }
+
+        // Remove item from cart
+        function removeItem(itemIndex) {
+            if (itemIndex >= 0 && itemIndex < cart.length) {
+                if (currentRestaurant === 'hysushi' || currentRestaurant === 'mcdonalds' || currentRestaurant === 'kfc' || currentRestaurant === 'burgerking') {
+                    cart.splice(itemIndex, 1);
+                    saveCart();
+                } else {
+                    cart.splice(itemIndex, 1);
+                    saveCart();
+                }
+
+                renderCartItems();
+                updateCartDisplay();
+            }
+        }
+
+        function clearCart() {
+            if (cart.length === 0) return;
+
+            if (confirm("Are you sure you want to clear your cart?")) {
+                if (currentRestaurant === 'hysushi' || currentRestaurant === 'mcdonalds' || currentRestaurant === 'kfc' || currentRestaurant === 'burgerking') {
+                    const cartKey = RESTAURANTS[currentRestaurant].cartKey;
+                    const allItems = JSON.parse(localStorage.getItem(cartKey) || '[]');
+
+                    const filteredItems = allItems.filter(item => {
+                        if (currentRestaurant === 'hysushi') {
+                            return item.restaurantId !== 'hysushi' && item.restaurantName !== 'Hysushi';
+                        } else if (currentRestaurant === 'mcdonalds') {
+                            return item.restaurantId !== 'mcdonalds' && item.restaurantName !== 'McDonald\'s';
+                        } else if (currentRestaurant === 'kfc') {
+                            return item.restaurantId !== 'kfc' &&
+                                item.restaurantName !== 'KFC Marrakech' &&
+                                item.restaurantName !== 'KFC';
+                        } else if (currentRestaurant === 'burgerking') {
+                            return item.restaurantId !== 'burgerking' &&
+                                item.restaurantName !== 'Burger King';
+                        }
+                        return true;
+                    });
+
+                    localStorage.setItem(cartKey, JSON.stringify(filteredItems));
+                    cart = [];
+                } else {
+                    cart = [];
+                    saveCart();
+                }
+
+                renderCartItems();
+                updateCartDisplay();
+                alert("Your cart has been cleared successfully.");
+            }
+        }
+
+        function handleCheckout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty. Please add items before checking out.");
+                return;
+            }
+
+            saveCustomerInfo();
+            sendWhatsAppOrder();
+        }
+
+        function saveCustomerInfo() {
+            customerInfo = {
+                name: customerNameInput.value.trim(),
+                address: customerAddressInput.value.trim(),
+                deliveryTime: document.querySelector('.time-option.selected').getAttribute('data-time')
+            };
+
+            const customerInfoKey = RESTAURANTS[currentRestaurant].customerInfoKey;
+            localStorage.setItem(customerInfoKey, JSON.stringify(customerInfo));
+        }
+
+        function loadCustomerInfo() {
+            try {
+                const customerInfoKey = RESTAURANTS[currentRestaurant].customerInfoKey;
+                const savedInfo = localStorage.getItem(customerInfoKey);
+                if (savedInfo) {
+                    customerInfo = JSON.parse(savedInfo);
+                    customerNameInput.value = customerInfo.name || "";
+                    customerAddressInput.value = customerInfo.address || "";
+
+                    document.querySelectorAll('.time-option').forEach(option => {
+                        option.classList.remove('selected');
+                        if (option.getAttribute('data-time') === customerInfo.deliveryTime) {
+                            option.classList.add('selected');
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error("Error loading customer info:", error);
+            }
+        }
+
+        function sendWhatsAppOrder() {
+            const totals = calculateTotals();
+            const message = generateWhatsAppMessage(totals);
+            const restaurant = RESTAURANTS[currentRestaurant];
+
+            const whatsappUrl = `https://wa.me/${restaurant.whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+
+            setTimeout(() => {
+                cart = [];
+                saveCart();
+                renderCartItems();
+                updateCartDisplay();
+                alert(`Order sent successfully to ${restaurant.name}! Your cart has been cleared.`);
+            }, 1000);
+        }
+
+        function generateWhatsAppMessage(totals) {
+            const restaurant = RESTAURANTS[currentRestaurant];
+            let message = ` ${restaurant.emoji}*NEW ${restaurant.name.toUpperCase()} ORDER* ${restaurant.emoji}\n\n`;
+
+            if (customerInfo.name || customerInfo.address) {
+                message += `*Delivery Details:*\n`;
+                if (customerInfo.name) message += `👤 Name: ${customerInfo.name}\n`;
+                if (customerInfo.address) message += `📍 Address: ${customerInfo.address}\n`;
+                message += `⏰ Delivery: ${customerInfo.deliveryTime === 'asap' ? 'ASAP (25-35 min)' : 'Schedule Later'}\n\n`;
+            }
+
+            message += `*Order Details:*\n`;
+            message += `====================\n\n`;
+
+            cart.forEach((item, index) => {
+                const customizationsText = formatCustomizationsForMessage(item);
+                const pricePerUnit = item.price || (item.totalPrice / item.quantity);
+
+                message += `*${index + 1}. ${item.quantity}x ${item.name}*\n`;
+                message += `   Unit Price: ${pricePerUnit.toFixed(2)} MAD\n`;
+                message += `   Total: ${item.totalPrice.toFixed(2)} MAD\n`;
+
+                if (customizationsText) {
+                    message += `   Customizations:\n${customizationsText}`;
+                }
+
+                if (item.specialInstructions && item.specialInstructions.trim() !== '') {
+                    message += `   📝 Note: ${item.specialInstructions}\n`;
+                }
+
+                message += `\n`;
+            });
+
+            message += `*Order Summary:*\n`;
+            message += `====================\n`;
+            message += `Items Total: ${totals.total} MAD\n\n`;
+
+            message += `*Note:* This total does not include delivery charges.\n`;
+            message += `Delivery fee will be calculated based on your location.\n\n`;
+
+            message += `*Payment Method:* Cash on Delivery\n\n`;
+
+            message += `====================\n`;
+            message += `Please confirm this order and let me know the delivery charges.\n`;
+            message += `Thank you! 🙏`;
+
+            return message;
+        }
+
+        function handleBackButton() {
+            const restaurant = RESTAURANTS[currentRestaurant];
+            window.location.href = restaurant.backLink;
+        }
+
+        function attachEventListeners() {
+            clearCartBtn.addEventListener('click', clearCart);
+            checkoutBtn.addEventListener('click', handleCheckout);
+            backButton.addEventListener('click', handleBackButton);
+
+            timeOptions.forEach(option => {
+                option.addEventListener('click', function () {
+                    timeOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    customerInfo.deliveryTime = this.getAttribute('data-time');
+                });
+            });
+
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.addEventListener('click', function () {
+                    document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const radioInput = this.querySelector('input[type="radio"]');
+                    if (radioInput) {
+                        radioInput.checked = true;
+                    }
+                });
+            });
+
+            cartItemsContainer.addEventListener('click', function (e) {
+                const itemCard = e.target.closest('.item-card');
+                if (!itemCard) return;
+
+                const itemIndex = parseInt(itemCard.getAttribute('data-id'));
+
+                if (e.target.closest('.plus-btn')) {
+                    updateQuantity(itemIndex, 1);
+                } else if (e.target.closest('.minus-btn')) {
+                    updateQuantity(itemIndex, -1);
+                } else if (e.target.closest('.remove-item')) {
+                    removeItem(itemIndex);
+                }
+            });
+
+            [customerNameInput, customerAddressInput].forEach(input => {
+                input.addEventListener('input', function () {
+                    saveCustomerInfo();
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            initRestaurant();
+        });
+
+        function debugCart() {
+            console.log("=== CART DEBUG INFO ===");
+            console.log("Current restaurant:", currentRestaurant);
+            console.log("Current cart array:", cart);
+            console.log("Cart length:", cart.length);
+
+            console.log("\n--- All localStorage Keys ---");
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                console.log(`Key ${i}: ${key}`);
+            }
+
+            console.log("\n--- Cart Contents ---");
+            console.log("Pizza Hut cart:", JSON.parse(localStorage.getItem('pizzahutCart') || '[]'));
+
+            const unifiedCart = JSON.parse(localStorage.getItem('unifiedCart') || '[]');
+            console.log("Unified cart (ALL items):", unifiedCart);
+            console.log("Unified cart length:", unifiedCart.length);
+
+            const hysushiItems = unifiedCart.filter(item =>
+                item.restaurantId === 'hysushi' ||
+                item.restaurantName === 'Hysushi'
+            );
+            console.log("Hysushi items in unified cart:", hysushiItems);
+            console.log("Hysushi items count:", hysushiItems.length);
+
+            const mcdonaldsItems = unifiedCart.filter(item =>
+                item.restaurantId === 'mcdonalds' ||
+                item.restaurantName === 'McDonald\'s'
+            );
+            console.log("McDonald's items in unified cart:", mcdonaldsItems);
+            console.log("McDonald's items count:", mcdonaldsItems.length);
+
+            const kfcItems = unifiedCart.filter(item =>
+                item.restaurantId === 'kfc' ||
+                item.restaurantName === 'KFC Marrakech' ||
+                item.restaurantName === 'KFC'
+            );
+            console.log("KFC items in unified cart:", kfcItems);
+            console.log("KFC items count:", kfcItems.length);
+
+            const burgerkingItems = unifiedCart.filter(item =>
+                item.restaurantId === 'burgerking' ||
+                item.restaurantName === 'Burger King'
+            );
+            console.log("Burger King items in unified cart:", burgerkingItems);
+            console.log("Burger King items count:", burgerkingItems.length);
+
+            console.log("\n--- Customer Info ---");
+            console.log("Current customerInfo:", customerInfo);
+            console.log("Pizza Hut customer info:", localStorage.getItem('pizzahutCustomerInfo'));
+            console.log("Hysushi customer info:", localStorage.getItem('hysushiCustomerInfo'));
+            console.log("McDonald's customer info:", localStorage.getItem('mcdonaldsCustomerInfo'));
+            console.log("KFC customer info:", localStorage.getItem('kfcCustomerInfo'));
+            console.log("Burger King customer info:", localStorage.getItem('burgerkingCustomerInfo'));
+
+            console.log("=== END DEBUG INFO ===");
+        }
+    </script>
+</body>
+
+</html>

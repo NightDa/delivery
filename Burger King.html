@@ -1,0 +1,3065 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burger King - Flame-Grilled Burgers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* NEW NAVIGATION BAR */
+        .new-navbar {
+            background: white;
+            padding: 15px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-center {
+            flex: 1;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ff7f00;
+            margin: 0;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #666;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: #f5f5f5;
+            color: #ff7f00;
+        }
+
+        /* Main styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Hero Image */
+        .hero-section {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            padding: 20px 16px 16px;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Restaurant Info */
+        .restaurant-info {
+            padding: 20px 16px;
+            background-color: white;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 8px;
+        }
+
+        .restaurant-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ff7f00;
+        }
+
+        .rating-delivery {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            background: #FFF8F0;
+            border-radius: 20px;
+        }
+
+        .rating-value {
+            font-weight: 700;
+            margin-right: 4px;
+            color: #ff7f00;
+        }
+
+        .delivery-time {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            background: #F8F9FA;
+            border-radius: 20px;
+            color: #495057;
+        }
+
+        .delivery-icon {
+            margin-right: 6px;
+            color: #ff7f00;
+        }
+
+        /* Categories Section */
+        .categories-section {
+            padding: 16px;
+            background-color: white;
+            margin-bottom: 8px;
+            position: sticky;
+            top: 60px;
+            z-index: 900;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .categories {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+            scroll-behavior: smooth;
+        }
+
+        .categories::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category {
+            padding: 12px 18px;
+            background: #F8F9FA;
+            border-radius: 12px;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 500;
+            color: #495057;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #E9ECEF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: max-content;
+            will-change: transform, background, color;
+        }
+
+        .category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff7f00 0%, #e57200 100%);
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .category.active {
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 127, 0, 0.25);
+            border-color: #ff7f00;
+            font-weight: 600;
+        }
+
+        .category.active::before {
+            opacity: 1;
+        }
+
+        .category.highlight {
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Category Items Section */
+        .category-items-section {
+            padding: 20px 16px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 16px;
+            scroll-margin-top: 120px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .category-items-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #212529;
+            position: relative;
+        }
+
+        .category-item {
+            display: flex;
+            padding: 16px 0;
+            border-bottom: 1px solid #F1F3F5;
+            transition: transform 0.2s ease;
+        }
+
+        .category-item:last-child {
+            border-bottom: none;
+        }
+
+        .category-item:hover {
+            transform: translateX(5px);
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-right: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-item:hover .item-image {
+            transform: scale(1.05);
+        }
+
+        .item-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 6px;
+            color: #212529;
+        }
+
+        .item-description {
+            font-size: 13px;
+            color: #6C757D;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: #000000;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .price-size {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .size-text {
+            color: #6C757D;
+        }
+
+        .price-amount {
+            color: #ff7f00;
+        }
+
+        .item-add-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff7f00 0%, #e57200 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(255, 127, 0, 0.3);
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .item-add-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* Animation for navbar transition */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Observer animation for sections */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-section {
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        /* View Cart Button */
+        .view-cart-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff7f00;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 25px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .view-cart-btn:hover {
+            background-color: #e57200;
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .cart-item-count {
+            background: #fff;
+            color: #ff7f00;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Stars animation */
+        @keyframes starAnimation {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0.5);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(var(--tx), var(--ty)) scale(1.2);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(1);
+            }
+        }
+
+        .star {
+            position: absolute;
+            color: white;
+            font-size: 8px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Animation for added items */
+        .pulse {
+            animation: pulse 0.5s ease;
+        }
+
+        /* Share Popup Modal */
+        .share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .share-container {
+            background: white;
+            width: 90%;
+            max-width: 350px;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .share-header {
+            margin-bottom: 20px;
+        }
+
+        .share-header h3 {
+            margin: 0;
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .share-header p {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .share-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .share-btn.whatsapp {
+            background-color: #25D366;
+            color: white;
+        }
+
+        .share-btn.whatsapp:hover {
+            background-color: #1da851;
+        }
+
+        .share-btn.copy {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .share-btn.copy:hover {
+            background-color: #e9ecef;
+        }
+
+        .close-share {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .close-share:hover {
+            background: #f5f5f5;
+        }
+
+        /* Main Content Container */
+        .main-content {
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        /* Search Modal */
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 100px;
+        }
+
+        .search-container {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-header h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .close-search {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ff7f00;
+        }
+
+        .search-results {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .search-result-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-result-item:hover {
+            background: #f5f5f5;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .search-result-description {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .search-result-price {
+            color: #ff7f00;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 16px;
+            }
+
+            .nav-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            .search-container,
+            .share-container {
+                width: 95%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NEW NAVIGATION BAR -->
+    <div class="new-navbar">
+        <div class="nav-left">
+            <button class="nav-btn" id="backBtn" title="Back to Home">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        <div class="nav-center">
+            <h1 class="page-title">Burger King</h1>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn" id="searchBtn" title="Search Menu">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="nav-btn" id="shareBtn" title="Share Page">
+                <i class="fas fa-share-alt"></i>
+            </button>
+            <!-- Home button removed as requested -->
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-container">
+            <div class="search-header">
+                <h3>Search Menu</h3>
+                <button class="close-search" id="closeSearchBtn">×</button>
+            </div>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search for burgers..."
+                autocomplete="off">
+            <div class="search-results" id="searchResults">
+                <!-- Search results will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Popup Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-container">
+            <div class="share-header">
+                <h3>Share Order</h3>
+                <p>Share your Burger King order with friends</p>
+            </div>
+            <div class="share-buttons">
+                <button class="share-btn whatsapp" id="whatsappShareBtn">
+                    <i class="fab fa-whatsapp"></i>
+                    Share via WhatsApp
+                </button>
+                <button class="share-btn copy" id="copyOrderBtn">
+                    <i class="fas fa-copy"></i>
+                    Copy Order Details
+                </button>
+            </div>
+            <button class="close-share" id="closeShareBtn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Hero Image -->
+    <div class="hero-section">
+        <img src="https://i.ibb.co/TDv25dZk/image.jpg" alt="Burger King Burgers" class="hero-image">
+        <div class="hero-overlay">
+            <h1 class="hero-title">Burger King</h1>
+            <p class="hero-subtitle">Flame-Grilled Burgers</p>
+        </div>
+    </div>
+
+    <!-- Restaurant Info -->
+    <div class="restaurant-info">
+        <h2 class="restaurant-name">Burger King</h2>
+        <div class="rating-delivery">
+            <div class="rating">
+                <span class="rating-value">4.4</span>
+                <i class="fas fa-star"></i>
+                <span>(432 ratings)</span>
+            </div>
+            <div class="delivery-time">
+                <i class="fas fa-clock delivery-icon"></i>
+                <span>20-35 min</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Navigation -->
+    <div class="categories-section">
+        <div class="categories" id="categoriesContainer">
+            <!-- Categories will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Menus Beef Section -->
+        <div class="category-items-section animate-section" id="menusBeefSection">
+            <h2 class="section-title">Menus Beef</h2>
+
+            <!-- Menu Triple Whopper -->
+            <div class="category-item" id="menu-triple-whopper-item">
+                <img src="https://glovo.dhmedia.io/image/menus-glovo/products/4264b2e05b45d41866e5e629105ea388de7e2dd28f69e178242f151b5c817781?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Triple Whopper" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Triple Whopper</div>
+                    <div class="item-description">Craquez pour le mythe ! Trois morceaux de viande de bœuf grillées en
+                        un seul burger. Relevez le défi et tripler votre dose de saveurs !</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu</span>
+                                <span class="price-amount">100.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-triple-whopper-btn" data-name="Menu Triple Whopper"
+                            data-price="100.00"
+                            data-img="https://glovo.dhmedia.io/image/menus-glovo/products/4264b2e05b45d41866e5e629105ea388de7e2dd28f69e178242f151b5c817781?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Craquez pour le mythe ! Trois morceaux de viande de bœuf grillées en un seul burger. Relevez le défi et tripler votre dose de saveurs !">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Double Steakhouse Beef -->
+            <div class="category-item" id="menu-double-steakhouse-beef-item">
+                <img src="https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080358/f3230434-11bd-4d73-9974-7819e76127df.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Double Steakhouse Beef" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Double Steakhouse Beef</div>
+                    <div class="item-description">Doublez le plaisir de la nouvelle recette de notre Steakhouse, avec
+                        deux viandes de bœuf grillées à la flamme, des oignons croustillants et une délicieuse sauce
+                        barbecue.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu</span>
+                                <span class="price-amount">96.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-double-steakhouse-beef-btn"
+                            data-name="Menu Double Steakhouse Beef" data-price="96.00"
+                            data-img="https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080358/f3230434-11bd-4d73-9974-7819e76127df.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Doublez le plaisir de la nouvelle recette de notre Steakhouse, avec deux viandes de bœuf grillées à la flamme, des oignons croustillants et une délicieuse sauce barbecue.">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Double Whopper -->
+            <div class="category-item" id="menu-double-whopper-item">
+                <img src="https://glovo.dhmedia.io/image/menus-glovo/products/caf475bae835b2fb52bdb6e2360eb47ab2a39b8f3ef9c15d63673e297a9a4ec7?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Double Whopper" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Double Whopper</div>
+                    <div class="item-description">Fan du WHOPPER ? Vous allez adorer sa version grande taille ! Deux
+                        savoureuses viandes de bœuf grillées à la flamme et une délicieuse tranche de fromage.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu</span>
+                                <span class="price-amount">91.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-double-whopper-btn" data-name="Menu Double Whopper"
+                            data-price="91.00"
+                            data-img="https://glovo.dhmedia.io/image/menus-glovo/products/caf475bae835b2fb52bdb6e2360eb47ab2a39b8f3ef9c15d63673e297a9a4ec7?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Fan du WHOPPER ? Vous allez adorer sa version grande taille ! Deux savoureuses viandes de bœuf grillées à la flamme et une délicieuse tranche de fromage.">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Double Bbq XXL Meal -->
+            <div class="category-item" id="menu-double-bbq-xxl-meal-item">
+                <img src="https://glovo.dhmedia.io/image/menus-glovo/products/5cabc63eb897dfd6a3b011bdd4e7cd95e28fbb222d8cd535a0b0c82d64f6e49c?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Double Bbq XXL Meal" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Double Bbq XXL Meal</div>
+                    <div class="item-description">Faites de la place pour notre Double BBQ XXL, composé de deux tranches
+                        de bœuf grillées au feu et garni d'une savoureuse sauce barbecue et de fromage fondu. Aux
+                        grandes faims les grands burgers !</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu XXL</span>
+                                <span class="price-amount">91.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-double-bbq-xxl-meal-btn"
+                            data-name="Menu Double Bbq XXL Meal" data-price="91.00"
+                            data-img="https://glovo.dhmedia.io/image/menus-glovo/products/5cabc63eb897dfd6a3b011bdd4e7cd95e28fbb222d8cd535a0b0c82d64f6e49c?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Faites de la place pour notre Double BBQ XXL, composé de deux tranches de bœuf grillées au feu et garni d'une savoureuse sauce barbecue et de fromage fondu. Aux grandes faims les grands burgers !">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Big King XXL -->
+            <div class="category-item" id="menu-big-king-xxl-item">
+                <img src="https://glovo.dhmedia.io/image/menus-glovo/products/4a00227e67bc7b972ae75133b61ac2e1d22f8e9d749e4c99cb93ad5eea9d0619?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Big King XXL" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Big King XXL</div>
+                    <div class="item-description">Extra-extra-large ! L'inimitable sauce BIG KING, deux viandes de boeuf
+                        grillées à la flamme et deux délicieuses tranches de fromage. Une icône de taille.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu XXL</span>
+                                <span class="price-amount">91.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-big-king-xxl-btn" data-name="Menu Big King XXL"
+                            data-price="91.00"
+                            data-img="https://glovo.dhmedia.io/image/menus-glovo/products/4a00227e67bc7b972ae75133b61ac2e1d22f8e9d749e4c99cb93ad5eea9d0619?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Extra-extra-large ! L'inimitable sauce BIG KING, deux viandes de boeuf grillées à la flamme et deux délicieuses tranches de fromage. Une icône de taille.">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Steakhouse Beef -->
+            <div class="category-item" id="menu-steakhouse-beef-item">
+                <img src="https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080363/76501598-9400-4d61-9376-ec1484312df2.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Steakhouse Beef" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Steakhouse Beef</div>
+                    <div class="item-description">Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts?
+                        Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de bœuf
+                        grillée à la flamme et d'une tranche de fromage fondu.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu</span>
+                                <span class="price-amount">85.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-steakhouse-beef-btn" data-name="Menu Steakhouse Beef"
+                            data-price="85.00"
+                            data-img="https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080363/76501598-9400-4d61-9376-ec1484312df2.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts? Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de bœuf grillée à la flamme et d'une tranche de fromage fondu.">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Whopper -->
+            <div class="category-item" id="menu-whopper-item">
+                <img src="https://glovo.dhmedia.io/image/menus-glovo/products/0fd2364f7cdcd08cb87bb8eb79ca864a2929da5797681ed8aba148f3122750c3?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Whopper" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Whopper</div>
+                    <div class="item-description">Craquez pour LE mythe. Une viande de boeuf grillée à la flamme, une
+                        mayonnaise onctueuse, des tomates fraîches, une salade croquante, des cornichons et des oignons.
+                    </div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu</span>
+                                <span class="price-amount">79.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-whopper-btn" data-name="Menu Whopper" data-price="79.00"
+                            data-img="https://glovo.dhmedia.io/image/menus-glovo/products/0fd2364f7cdcd08cb87bb8eb79ca864a2929da5797681ed8aba148f3122750c3?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Craquez pour LE mythe. Une viande de boeuf grillée à la flamme, une mayonnaise onctueuse, des tomates fraîches, une salade croquante, des cornichons et des oignons.">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Beef Royal -->
+            <div class="category-item" id="menu-beef-royal-item">
+                <img src="https://glovo.dhmedia.io/image/menus-glovo/products/4432d88887c5acc523888cacb1d85be0eef8d94e527d2bc7a35372855f5a897b?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Beef Royal" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Beef Royal</div>
+                    <div class="item-description">Un burger avec deux généreuses tranches de bœuf, couronné de fromage
+                        et de sauces. Le burger idéal pour les amateurs de bœuf !</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu</span>
+                                <span class="price-amount">69.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-beef-royal-btn" data-name="Menu Beef Royal"
+                            data-price="69.00"
+                            data-img="https://glovo.dhmedia.io/image/menus-glovo/products/4432d88887c5acc523888cacb1d85be0eef8d94e527d2bc7a35372855f5a897b?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Un burger avec deux généreuses tranches de bœuf, couronné de fromage et de sauces. Le burger idéal pour les amateurs de bœuf !">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Big King Beef -->
+            <div class="category-item" id="menu-big-king-beef-item">
+                <img src="https://glovo.dhmedia.io/image/menus-glovo/products/31c6d60f9f4ca5ff6b49f7100f920d0c420d02e55549966e53249cb4ca8e3d9e?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Big King Beef" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Big King Beef</div>
+                    <div class="item-description">L'incontournable Big King, fondez pour sa sauce au goût unique, ses
+                        deux viandes de bœuf grillées à la flamme et son fromage fondant. Un chef d'œuvre !</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu</span>
+                                <span class="price-amount">66.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-big-king-beef-btn" data-name="Menu Big King Beef"
+                            data-price="66.00"
+                            data-img="https://glovo.dhmedia.io/image/menus-glovo/products/31c6d60f9f4ca5ff6b49f7100f920d0c420d02e55549966e53249cb4ca8e3d9e?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="L'incontournable Big King, fondez pour sa sauce au goût unique, ses deux viandes de bœuf grillées à la flamme et son fromage fondant. Un chef d'œuvre !">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Double Cheeseburger -->
+            <div class="category-item" id="menu-double-cheeseburger-item">
+                <img src="https://glovo.dhmedia.io/image/menus-glovo/products/5453d9babcd2a584e575373dde1a9f186cc0ab1a58a2d229dd8d8b4049f3fb20?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Double Cheeseburger" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Double Cheeseburger</div>
+                    <div class="item-description">Le Double Cheeseburger incontournable fait son grand retour : deux
+                        steaks de bœuf grillés à la flamme, du fromage cheddar fondu, et deux rondelles de cornichon.
+                    </div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu</span>
+                                <span class="price-amount">55.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-double-cheeseburger-btn"
+                            data-name="Menu Double Cheeseburger" data-price="55.00"
+                            data-img="https://glovo.dhmedia.io/image/menus-glovo/products/5453d9babcd2a584e575373dde1a9f186cc0ab1a58a2d229dd8d8b4049f3fb20?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Le Double Cheeseburger incontournable fait son grand retour : deux steaks de bœuf grillés à la flamme, du fromage cheddar fondu, et deux rondelles de cornichon.">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Cheeseburger -->
+            <div class="category-item" id="menu-cheeseburger-item">
+                <img src="https://glovo.dhmedia.io/image/menus-glovo/products/262770b4db498af9d9c04494e343c086d33d5697a270df486f6c7d8bdf4169aa?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Cheeseburger" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Cheeseburger</div>
+                    <div class="item-description">Notre petit préféré. Du fromage fondu et une viande de bœuf grillée à
+                        la flamme. Légendaire.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu</span>
+                                <span class="price-amount">31.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-cheeseburger-btn" data-name="Menu Cheeseburger"
+                            data-price="31.00"
+                            data-img="https://glovo.dhmedia.io/image/menus-glovo/products/262770b4db498af9d9c04494e343c086d33d5697a270df486f6c7d8bdf4169aa?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Notre petit préféré. Du fromage fondu et une viande de bœuf grillée à la flamme. Légendaire.">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Hamburger -->
+            <div class="category-item" id="menu-hamburger-item">
+                <img src="https://glovo.dhmedia.io/image/menus-glovo/products/9c207f8e6765c7b91da2f722c82f06c4b38be58713eb0226c9812f6f03785c1e?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                    alt="Menu Hamburger" class="item-image">
+                <div class="item-info">
+                    <div class="item-name">Menu Hamburger</div>
+                    <div class="item-description">Une viande de bœuf grillée à la flamme, du ketchup, de la moutarde et
+                        des cornichons. Un classique.</div>
+                    <div class="item-footer">
+                        <div class="item-price">
+                            <div class="price-size">
+                                <span class="size-text">Menu</span>
+                                <span class="price-amount">28.00 MAD</span>
+                            </div>
+                        </div>
+                        <button class="item-add-btn" id="menu-hamburger-btn" data-name="Menu Hamburger"
+                            data-price="28.00"
+                            data-img="https://glovo.dhmedia.io/image/menus-glovo/products/9c207f8e6765c7b91da2f722c82f06c4b38be58713eb0226c9812f6f03785c1e?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                            data-description="Une viande de bœuf grillée à la flamme, du ketchup, de la moutarde et des cornichons. Un classique.">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menus Chicken Section -->
+    <div class="category-items-section animate-section" id="menusChickenSection">
+        <h2 class="section-title">Menus Chicken</h2>
+
+        <!-- Menu Double Chicken Royal -->
+        <div class="category-item" id="menu-double-chicken-royal-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/ae5208f9c597a9e24c41df2cebb18fe0a812773f156f01992fc0dd75615bdd99?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu Double Chicken Royal" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu Double Chicken Royal</div>
+                <div class="item-description">Vous avez la chance de doubler le plaisir du Chicken Royal, grâce à deux
+                    tranches de poulet pané, enveloppées dans une garniture spéciale à la fois croustillante et
+                    crémeuse.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">91.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-double-chicken-royal-btn"
+                        data-name="Menu Double Chicken Royal" data-price="91.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/ae5208f9c597a9e24c41df2cebb18fe0a812773f156f01992fc0dd75615bdd99?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Vous avez la chance de doubler le plaisir du Chicken Royal, grâce à deux tranches de poulet pané, enveloppées dans une garniture spéciale à la fois croustillante et crémeuse.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Steakhouse Chicken -->
+        <div class="category-item" id="menu-steakhouse-chicken-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/44c32def704f4fb2d9d62bc82c7be449f6b492f02f135eadb1142874e8d92da0?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu Steakhouse Chicken" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu Steakhouse Chicken</div>
+                <div class="item-description">Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts ?
+                    Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de poulet
+                    et d'une tranche de fromage fondu.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">89.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-steakhouse-chicken-btn" data-name="Menu Steakhouse Chicken"
+                        data-price="89.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/44c32def704f4fb2d9d62bc82c7be449f6b492f02f135eadb1142874e8d92da0?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts ? Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de poulet et d'une tranche de fromage fondu.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Chicken Royal -->
+        <div class="category-item" id="menu-chicken-royal-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/64ff58fd9e2a81671a598353649ecd107d1e0ec3a462accfc986004275c788c3?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu Chicken Royal" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu Chicken Royal</div>
+                <div class="item-description">Il y a des choses dont on ne se lasse pas. Un poulet tendre pané aux
+                    épices et une salade croquante dans un pain extra-long. Un plaisir qui dure.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">77.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-chicken-royal-btn" data-name="Menu Chicken Royal"
+                        data-price="77.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/64ff58fd9e2a81671a598353649ecd107d1e0ec3a462accfc986004275c788c3?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Il y a des choses dont on ne se lasse pas. Un poulet tendre pané aux épices et une salade croquante dans un pain extra-long. Un plaisir qui dure.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Chicken Crispy -->
+        <div class="category-item" id="menu-chicken-crispy-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/b5372a4f6509adea7f649d198eddd501bb9276d4f5f1ff7a1f135765d417d556?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu Chicken Crispy" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu Chicken Crispy</div>
+                <div class="item-description">Un délicieux burger au poulet (très !) croustillant, accompagné de salade
+                    et d'une onctueuse mayonnaise.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">64.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-chicken-crispy-btn" data-name="Menu Chicken Crispy"
+                        data-price="64.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/b5372a4f6509adea7f649d198eddd501bb9276d4f5f1ff7a1f135765d417d556?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Un délicieux burger au poulet (très !) croustillant, accompagné de salade et d'une onctueuse mayonnaise.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Chicken Burger -->
+        <div class="category-item" id="menu-chicken-burger-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/4309b4a4f76876b33f136b674c891a02886d76410fdfe20a819b119a91ca2b4a?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu Chicken Burger" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu Chicken Burger</div>
+                <div class="item-description">Un classique, avec une délicieuse tranche de poulet sur un petit pain au
+                    sésame grillé, garnie de laitue fraîche et de sauce crémeuse.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">32.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-chicken-burger-btn" data-name="Menu Chicken Burger"
+                        data-price="32.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/4309b4a4f76876b33f136b674c891a02886d76410fdfe20a819b119a91ca2b4a?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Un classique, avec une délicieuse tranche de poulet sur un petit pain au sésame grillé, garnie de laitue fraîche et de sauce crémeuse.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Menus Fish Section -->
+    <div class="category-items-section animate-section" id="menusFishSection">
+        <h2 class="section-title">Menus Fish</h2>
+
+        <!-- Menu King Fish Spicy -->
+        <div class="category-item" id="menu-king-fish-spicy-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/77bb3d286b4646d104b36c6be834f0bced39284d14404e85736b35a33e51b09d?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu King Fish Spicy" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu King Fish Spicy</div>
+                <div class="item-description">Venez découvrir les nouveaux burgers King Fish Spicy avec une recette
+                    toute aussi généreuse qu'épicée : Du poisson pané croustillant, une sauce onctueuse et des jalapeños
+                    bien spicy.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">58.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-king-fish-spicy-btn" data-name="Menu King Fish Spicy"
+                        data-price="58.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/77bb3d286b4646d104b36c6be834f0bced39284d14404e85736b35a33e51b09d?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Venez découvrir les nouveaux burgers King Fish Spicy avec une recette toute aussi généreuse qu'épicée : Du poisson pané croustillant, une sauce onctueuse et des jalapeños bien spicy.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu King Fish -->
+        <div class="category-item" id="menu-king-fish-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/74892746ebf6e57091ef26ba5bf30791173b3da31a9503266b813f612750c91f?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu King Fish" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu King Fish</div>
+                <div class="item-description">Venez découvrir en exclusivité la nouvelle recette revisitée du Fish : Du
+                    poisson pané croustillant, une sauce onctueuse et une salade croquante.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">57.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-king-fish-btn" data-name="Menu King Fish" data-price="57.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/74892746ebf6e57091ef26ba5bf30791173b3da31a9503266b813f612750c91f?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Venez découvrir en exclusivité la nouvelle recette revisitée du Fish : Du poisson pané croustillant, une sauce onctueuse et une salade croquante.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menus Kids Section -->
+    <div class="category-items-section animate-section" id="menusKidsSection">
+        <h2 class="section-title">Menus Kids</h2>
+
+        <!-- Menu Kids Hamburger -->
+        <div class="category-item" id="menu-kids-hamburger-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/c4248610d9fb22cf976dadf9a46810e6bd3f7c86a0cf20edae3dfd3f89626598?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu Kids Hamburger" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu Kids Hamburger</div>
+                <div class="item-description">Faites plaisir à vos enfants avec notre menu Kids avec un Hamburger qui
+                    est notre classique et revisité pour les enfants avec une bonne couche de Ketchup, vous aurez en
+                    plus un jouet offert.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">33.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-kids-hamburger-btn" data-name="Menu Kids Hamburger"
+                        data-price="33.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/c4248610d9fb22cf976dadf9a46810e6bd3f7c86a0cf20edae3dfd3f89626598?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Faites plaisir à vos enfants avec notre menu Kids avec un Hamburger qui est notre classique et revisité pour les enfants avec une bonne couche de Ketchup, vous aurez en plus un jouet offert.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Kids Cheeseburger -->
+        <div class="category-item" id="menu-kids-cheeseburger-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/e4696d32f4d1f4db99d9bdfe2a70f115f96e18fd0ad87989f238a8d31ba2b8a2?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu Kids Cheeseburger" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu Kids Cheeseburger</div>
+                <div class="item-description">Faîtes goutez à vos enfants notre Cheeseburger composé d'une galette de
+                    bœuf grillée à la flamme, garnie d'une couche de fromage américain fondu, et de garnitures. Servi
+                    avec une petite boisson de votre choix et un jouet cadeau.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">33.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-kids-cheeseburger-btn" data-name="Menu Kids Cheeseburger"
+                        data-price="33.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/e4696d32f4d1f4db99d9bdfe2a70f115f96e18fd0ad87989f238a8d31ba2b8a2?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Faîtes goutez à vos enfants notre Cheeseburger composé d'une galette de bœuf grillée à la flamme, garnie d'une couche de fromage américain fondu, et de garnitures. Servi avec une petite boisson de votre choix et un jouet cadeau.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Kids Chicken Burger -->
+        <div class="category-item" id="menu-kids-chicken-burger-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/9806bbf5500990b82bb9ee0de434a054a5b35f79a4e5fbc99e7117e922b472e8?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu Kids Chicken Burger" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu Kids Chicken Burger</div>
+                <div class="item-description">Le Chicken Burger est un délicieux repas pour enfants, avec un burger au
+                    poulet et une bonne couche de Ketchup. Vous pouvez choisir en plus une boisson au choix, et sans
+                    oublier un jouet offert.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">33.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-kids-chicken-burger-btn" data-name="Menu Kids Chicken Burger"
+                        data-price="33.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/9806bbf5500990b82bb9ee0de434a054a5b35f79a4e5fbc99e7117e922b472e8?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Le Chicken Burger est un délicieux repas pour enfants, avec un burger au poulet et une bonne couche de Ketchup. Vous pouvez choisir en plus une boisson au choix, et sans oublier un jouet offert.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Kids Chicken Nuggets -->
+        <div class="category-item" id="menu-kids-chicken-nuggets-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/c5430f9b98e39e14be6d81d60e4c252da26b01a3faa06cb83f010461f146f3e8?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu Kids Chicken Nuggets" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu Kids Chicken Nuggets</div>
+                <div class="item-description">Le Kids Meal Chicken est composé de 4 nuggets, une boisson des frites et
+                    un cadeau surprise pour votre enfant.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">33.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-kids-chicken-nuggets-btn"
+                        data-name="Menu Kids Chicken Nuggets" data-price="33.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/c5430f9b98e39e14be6d81d60e4c252da26b01a3faa06cb83f010461f146f3e8?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Le Kids Meal Chicken est composé de 4 nuggets, une boisson des frites et un cadeau surprise pour votre enfant.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Kids Fish -->
+        <div class="category-item" id="menu-kids-fish-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/daa4a22737d91c52580a2d991b798f8b64ac18bd81f244e176b365df4d84328f?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Menu Kids Fish" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Menu Kids Fish</div>
+                <div class="item-description">Faîtes plaisir à vos enfants grâce à notre burger Fish, avec du bon
+                    poisson pané et une couche de Ketchup, vous recevrez en plus un jouet cadeau.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Menu</span>
+                            <span class="price-amount">33.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="menu-kids-fish-btn" data-name="Menu Kids Fish" data-price="33.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/daa4a22737d91c52580a2d991b798f8b64ac18bd81f244e176b365df4d84328f?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Faîtes plaisir à vos enfants grâce à notre burger Fish, avec du bon poisson pané et une couche de Ketchup, vous recevrez en plus un jouet cadeau.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Burgers Section -->
+    <div class="category-items-section animate-section" id="burgersSection">
+        <h2 class="section-title">Burgers</h2>
+
+        <!-- Triple Whopper -->
+        <div class="category-item" id="triple-whopper-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/dcb6e7add97083e96275e21555ab2ade653d328ea69abd5a58c7f5c884ab8cd5?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Triple Whopper" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Triple Whopper</div>
+                <div class="item-description">Craquez pour le mythe ! Trois morceaux de viande de bœuf grillées en un
+                    seul burger. Relevez le défi et tripler votre dose de saveurs !</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">85.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="triple-whopper-btn" data-name="Triple Whopper" data-price="85.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/dcb6e7add97083e96275e21555ab2ade653d328ea69abd5a58c7f5c884ab8cd5?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Craquez pour le mythe ! Trois morceaux de viande de bœuf grillées en un seul burger. Relevez le défi et tripler votre dose de saveurs !">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Steakhouse Double Beef -->
+        <div class="category-item" id="steakhouse-double-beef-item">
+            <img src="https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080317/7e908a25-c567-4236-b79e-e4615d81fc3f.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Steakhouse Double Beef" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Steakhouse Double Beef</div>
+                <div class="item-description">Doublez le plaisir de la nouvelle recette de notre Steakhouse, avec deux
+                    viandes de bœuf grillées à la flamme, des oignons croustillants, et une délicieuse sauce barbecue.
+                </div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">81.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="steakhouse-double-beef-btn" data-name="Steakhouse Double Beef"
+                        data-price="81.00"
+                        data-img="https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080317/7e908a25-c567-4236-b79e-e4615d81fc3f.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Doublez le plaisir de la nouvelle recette de notre Steakhouse, avec deux viandes de bœuf grillées à la flamme, des oignons croustillants, et une délicieuse sauce barbecue.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Double Whopper -->
+        <div class="category-item" id="double-whopper-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/ff7d2fc78ae12f329fe4248ed3463c42f3f0eff68788cf8db1d50e7b8534aa7b?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Double Whopper" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Double Whopper</div>
+                <div class="item-description">Fan du WHOPPER ? Vous allez adorer sa version grande taille ! Deux
+                    savoureuses viandes de bœuf grillées à la flamme et une délicieuse tranche de fromage</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">76.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="double-whopper-btn" data-name="Double Whopper" data-price="76.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/ff7d2fc78ae12f329fe4248ed3463c42f3f0eff68788cf8db1d50e7b8534aa7b?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Fan du WHOPPER ? Vous allez adorer sa version grande taille ! Deux savoureuses viandes de bœuf grillées à la flamme et une délicieuse tranche de fromage">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Double Bbq XXL Meal -->
+        <div class="category-item" id="double-bbq-xxl-meal-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/9b9427f4dd62ed4cd80fa0983a49b188765e55d59e64ac7bd171a891c429d5b9?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Double Bbq XXL Meal" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Double Bbq XXL Meal</div>
+                <div class="item-description">Faites de la place pour notre Double BBQ XXL, composé de deux tranches de
+                    bœuf grillées au feu et garni d'une savoureuse sauce barbecue et de fromage fondu. Aux grandes faims
+                    les grands burgers !</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger XXL</span>
+                            <span class="price-amount">76.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="double-bbq-xxl-meal-btn" data-name="Double Bbq XXL Meal"
+                        data-price="76.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/9b9427f4dd62ed4cd80fa0983a49b188765e55d59e64ac7bd171a891c429d5b9?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Faites de la place pour notre Double BBQ XXL, composé de deux tranches de bœuf grillées au feu et garni d'une savoureuse sauce barbecue et de fromage fondu. Aux grandes faims les grands burgers !">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Big King XXL -->
+        <div class="category-item" id="big-king-xxl-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/c0ad505d9742f325aa18b19b15df4afbb7d68b41413b853777573639b0b5da28?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Big King XXL" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Big King XXL</div>
+                <div class="item-description">Extra-extra-large ! L'inimitable sauce BIG KING, deux viandes de bœuf
+                    grillées à la flamme et deux délicieuses tranches de fromage. Une icône de taille.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger XXL</span>
+                            <span class="price-amount">76.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="big-king-xxl-btn" data-name="Big King XXL" data-price="76.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/c0ad505d9742f325aa18b19b15df4afbb7d68b41413b853777573639b0b5da28?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Extra-extra-large ! L'inimitable sauce BIG KING, deux viandes de bœuf grillées à la flamme et deux délicieuses tranches de fromage. Une icône de taille.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Double Chicken Royal -->
+        <div class="category-item" id="double-chicken-royal-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/9dcf8196fac3f4180b91a58939d2b72d2dbfcedb843711e271c0285ca393882a?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Double Chicken Royal" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Double Chicken Royal</div>
+                <div class="item-description">Vous avez la chance de doubler le plaisir du Chicken Royal, grâce à deux
+                    tranches de poulet pané, enveloppées dans une garniture spéciale à la fois croustillante et
+                    crémeuse.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">76.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="double-chicken-royal-btn" data-name="Double Chicken Royal"
+                        data-price="76.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/9dcf8196fac3f4180b91a58939d2b72d2dbfcedb843711e271c0285ca393882a?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Vous avez la chance de doubler le plaisir du Chicken Royal, grâce à deux tranches de poulet pané, enveloppées dans une garniture spéciale à la fois croustillante et crémeuse.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Steakhouse Chicken -->
+        <div class="category-item" id="steakhouse-chicken-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/9cbb4974be76198311d2343f79257aa1201227f6738256da7657098ce24be8de?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Steakhouse Chicken" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Steakhouse Chicken</div>
+                <div class="item-description">Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts ?
+                    Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de poulet
+                    et d'une tranche de fromage fondu.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">74.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="steakhouse-chicken-btn" data-name="Steakhouse Chicken"
+                        data-price="74.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/9cbb4974be76198311d2343f79257aa1201227f6738256da7657098ce24be8de?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts ? Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de poulet et d'une tranche de fromage fondu.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Steakhouse Beef -->
+        <div class="category-item" id="steakhouse-beef-item">
+            <img src="https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080332/7d3f7941-06a6-47af-96fd-0b9760ec957e.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Steakhouse Beef" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Steakhouse Beef</div>
+                <div class="item-description">Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts? Ses
+                    oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de bœuf grillée
+                    à la flamme et d'une tranche de fromage fondu.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">70.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="steakhouse-beef-btn" data-name="Steakhouse Beef" data-price="70.00"
+                        data-img="https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080332/7d3f7941-06a6-47af-96fd-0b9760ec957e.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts? Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de bœuf grillée à la flamme et d'une tranche de fromage fondu.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Whopper -->
+        <div class="category-item" id="whopper-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/eb03309fe6787ec55d30a85c320038ccb634a19430cddc6d60b43fca766feb90?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Whopper" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Whopper</div>
+                <div class="item-description">Craquez pour LE mythe. Une viande de boeuf grillée à la flamme, une
+                    mayonnaise onctueuse, des tomates fraîches, une salade croquante, des cornichons et des oignons.
+                </div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">64.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="whopper-btn" data-name="Whopper" data-price="64.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/eb03309fe6787ec55d30a85c320038ccb634a19430cddc6d60b43fca766feb90?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Craquez pour LE mythe. Une viande de boeuf grillée à la flamme, une mayonnaise onctueuse, des tomates fraîches, une salade croquante, des cornichons et des oignons.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chicken Royal -->
+        <div class="category-item" id="chicken-royal-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/614f375ab232cbcfad85735a0f1a569a092d8a21cf08a445879596f6287d0779?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Chicken Royal" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Chicken Royal</div>
+                <div class="item-description">Il y a des choses dont on ne se lasse pas.. Un poulet tendre pané aux
+                    épices et une salade croquante dans un pain extra-long. Un plaisir qui dure.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">62.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="chicken-royal-btn" data-name="Chicken Royal" data-price="62.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/614f375ab232cbcfad85735a0f1a569a092d8a21cf08a445879596f6287d0779?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Il y a des choses dont on ne se lasse pas.. Un poulet tendre pané aux épices et une salade croquante dans un pain extra-long. Un plaisir qui dure.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beef Royal -->
+        <div class="category-item" id="beef-royal-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/0c61b63f0393bf16d5191ab6cdda1332122c96028fa885288ecbdab121b46a8e?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Beef Royal" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Beef Royal</div>
+                <div class="item-description">Un burger avec deux généreuses tranches de bœuf, couronné de fromage et de
+                    sauces. Le burger idéal pour les amateurs de bœuf !</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">59.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="beef-royal-btn" data-name="Beef Royal" data-price="59.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/0c61b63f0393bf16d5191ab6cdda1332122c96028fa885288ecbdab121b46a8e?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Un burger avec deux généreuses tranches de bœuf, couronné de fromage et de sauces. Le burger idéal pour les amateurs de bœuf !">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Big King Beef -->
+        <div class="category-item" id="big-king-beef-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/032c62cdebd0d23101594a4b72e854f7f036c99f2c4868875740dbf6afe07e36?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Big King Beef" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Big King Beef</div>
+                <div class="item-description">L'incontournable Big King, fondez pour sa sauce au goût unique, ses deux
+                    viandes de bœuf grillées à la flamme et son fromage fondant. Un chef d'œuvre !</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">51.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="big-king-beef-btn" data-name="Big King Beef" data-price="51.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/032c62cdebd0d23101594a4b72e854f7f036c99f2c4868875740dbf6afe07e36?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="L'incontournable Big King, fondez pour sa sauce au goût unique, ses deux viandes de bœuf grillées à la flamme et son fromage fondant. Un chef d'œuvre !">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chicken Crispy -->
+        <div class="category-item" id="chicken-crispy-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/7d638908cb8c203fc2a0424ce1bafb90a9e1faf7a1cb332a75beee3760e34237?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Chicken Crispy" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Chicken Crispy</div>
+                <div class="item-description">Un délicieux burger au poulet (très !) croustillant, accompagné de salade
+                    et d'une onctueuse mayonnaise.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">49.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="chicken-crispy-btn" data-name="Chicken Crispy" data-price="49.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/7d638908cb8c203fc2a0424ce1bafb90a9e1faf7a1cb332a75beee3760e34237?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Un délicieux burger au poulet (très !) croustillant, accompagné de salade et d'une onctueuse mayonnaise.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Double Cheeseburger -->
+        <div class="category-item" id="double-cheeseburger-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/796f28525b5fd5a7d11f95b1c4548f6a040616738c095718267ad6e072bac875?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Double Cheeseburger" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Double Cheeseburger</div>
+                <div class="item-description">Le Double Cheeseburger incontournable fait son grand retour : deux steaks
+                    de bœuf grillés à la flamme, du fromage cheddar fondu, et deux rondelles de cornichon.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">45.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="double-cheeseburger-btn" data-name="Double Cheeseburger"
+                        data-price="45.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/796f28525b5fd5a7d11f95b1c4548f6a040616738c095718267ad6e072bac875?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Le Double Cheeseburger incontournable fait son grand retour : deux steaks de bœuf grillés à la flamme, du fromage cheddar fondu, et deux rondelles de cornichon.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- King Fish Spicy -->
+        <div class="category-item" id="king-fish-spicy-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/5b868367f0cb732fab935b7c31d3994f1d709e16bb2b1a13bd5ba9dd3a83d308?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="King Fish Spicy" class="item-image">
+            <div class="item-info">
+                <div class="item-name">King Fish Spicy</div>
+                <div class="item-description">Venez découvrir les nouveaux burgers King Fish Spicy avec une recette
+                    toute aussi généreuse qu'épicée : Du poisson pané croustillant, une sauce onctueuse et des jalapeños
+                    bien spicy.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">43.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="king-fish-spicy-btn" data-name="King Fish Spicy" data-price="43.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/5b868367f0cb732fab935b7c31d3994f1d709e16bb2b1a13bd5ba9dd3a83d308?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Venez découvrir les nouveaux burgers King Fish Spicy avec une recette toute aussi généreuse qu'épicée : Du poisson pané croustillant, une sauce onctueuse et des jalapeños bien spicy.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- King Fish -->
+        <div class="category-item" id="king-fish-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/47aea329a76e887e7a9aab4cff7d0a9de4cacf0313ec343655f45fddeb36fc89?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="King Fish" class="item-image">
+            <div class="item-info">
+                <div class="item-name">King Fish</div>
+                <div class="item-description">Venez découvrir en exclusivité la nouvelle recette revisitée du Fish : Du
+                    poisson pané croustillant, une sauce onctueuse et une salade croquante.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">42.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="king-fish-btn" data-name="King Fish" data-price="42.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/47aea329a76e887e7a9aab4cff7d0a9de4cacf0313ec343655f45fddeb36fc89?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Venez découvrir en exclusivité la nouvelle recette revisitée du Fish : Du poisson pané croustillant, une sauce onctueuse et une salade croquante.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chicken Burger -->
+        <div class="category-item" id="chicken-burger-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/06cd6f99483cdc0cc0d0eff97292c23a53329b2e91d9c70d2929713595e2a108?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Chicken Burger" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Chicken Burger</div>
+                <div class="item-description">Un classique, avec une délicieuse tranche de poulet sur un petit pain au
+                    sésame grillé, garni de laitue fraîche et de sauce crémeuse.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">22.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="chicken-burger-btn" data-name="Chicken Burger" data-price="22.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/06cd6f99483cdc0cc0d0eff97292c23a53329b2e91d9c70d2929713595e2a108?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Un classique, avec une délicieuse tranche de poulet sur un petit pain au sésame grillé, garni de laitue fraîche et de sauce crémeuse.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cheeseburger -->
+        <div class="category-item" id="cheeseburger-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/48e8545db36b40e7ebbe59c798d9976e672ae2fe68961ce7326ff09942eff9ec?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Cheeseburger" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Cheeseburger</div>
+                <div class="item-description">Notre petit préféré. Du fromage fondu et une viande de bœuf grillée à la
+                    flamme. Légendaire.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">21.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="cheeseburger-btn" data-name="Cheeseburger" data-price="21.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/48e8545db36b40e7ebbe59c798d9976e672ae2fe68961ce7326ff09942eff9ec?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Notre petit préféré. Du fromage fondu et une viande de bœuf grillée à la flamme. Légendaire.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hamburger -->
+        <div class="category-item" id="hamburger-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/e7efbbcf7cb68c6cc7a917389b4358051629745600b131e2532f4d8f1dc56f3a?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Hamburger" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Hamburger</div>
+                <div class="item-description">Une viande de bœuf grillée à la flamme, du ketchup, de la moutarde et des
+                    cornichons. Un classique.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Burger</span>
+                            <span class="price-amount">18.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="hamburger-btn" data-name="Hamburger" data-price="18.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/e7efbbcf7cb68c6cc7a917389b4358051629745600b131e2532f4d8f1dc56f3a?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Une viande de bœuf grillée à la flamme, du ketchup, de la moutarde et des cornichons. Un classique.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accompagnements Section -->
+    <div class="category-items-section animate-section" id="accompagnementsSection">
+        <h2 class="section-title">Accompagnements</h2>
+
+        <!-- Chicken Salad -->
+        <div class="category-item" id="chicken-salad-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/2aaf61f8e3c3f5834da78560233c69821aa65951d439193b7ea4b163c32534ed?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Chicken Salad" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Chicken Salad</div>
+                <div class="item-description">Notre salade de poulet est un merveilleux mélange de laitue de qualité, de
+                    tomates juteuses, de concombres frais et de maïs sucré. Servi avec une sauce Caesar onctueuse et
+                    garni de poulet juteux.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Salad</span>
+                            <span class="price-amount">34.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="chicken-salad-btn" data-name="Chicken Salad" data-price="34.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/2aaf61f8e3c3f5834da78560233c69821aa65951d439193b7ea4b163c32534ed?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Notre salade de poulet est un merveilleux mélange de laitue de qualité, de tomates juteuses, de concombres frais et de maïs sucré. Servi avec une sauce Caesar onctueuse et garni de poulet juteux.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chicken Nuggets -->
+        <div class="category-item" id="chicken-nuggets-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/a93c32de2b68ed935316943e67bb86d1988d31e8557a7617d3440296ecdbd20d?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Chicken Nuggets" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Chicken Nuggets</div>
+                <div class="item-description">Leur secret ? croustillants à l'extérieur, tendres à l'intérieur. Et
+                    vous, à quelle sauce allez-vous les manger ?</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Nuggets</span>
+                            <span class="price-amount">33.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="chicken-nuggets-btn" data-name="Chicken Nuggets" data-price="33.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/a93c32de2b68ed935316943e67bb86d1988d31e8557a7617d3440296ecdbd20d?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Leur secret ? croustillants à l'extérieur, tendres à l'intérieur. Et vous, à quelle sauce allez-vous les manger ?">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fish Salad -->
+        <div class="category-item" id="fish-salad-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/75e4420d861bca92cd4e358551f9cd246043874cbc329c6ad1e66596c085b2b4?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Fish Salad" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Fish Salad</div>
+                <div class="item-description">Notre salade de poisson est un merveilleux mélange de laitue de qualité,
+                    de tomates juteuses, de concombres frais et de maïs sucré. Servi avec de la vinaigrette et garni de
+                    poisson pané.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Salad</span>
+                            <span class="price-amount">32.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="fish-salad-btn" data-name="Fish Salad" data-price="32.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/75e4420d861bca92cd4e358551f9cd246043874cbc329c6ad1e66596c085b2b4?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Notre salade de poisson est un merveilleux mélange de laitue de qualité, de tomates juteuses, de concombres frais et de maïs sucré. Servi avec de la vinaigrette et garni de poisson pané.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Garden Salad -->
+        <div class="category-item" id="garden-salad-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/c123beaa31ea22f0771a14fbfa28343656f7dc1e91f68b28f2d5d59442ac38ce?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Garden Salad" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Garden Salad</div>
+                <div class="item-description">Notre salade Garden se compose d'un mélange de laitue de qualité, garnie
+                    de tomates juteuses, de crudités croquantes, et d'une sauce Caesar onctueuse. Fraicheur garantie !
+                </div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Salad</span>
+                            <span class="price-amount">25.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="garden-salad-btn" data-name="Garden Salad" data-price="25.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/c123beaa31ea22f0771a14fbfa28343656f7dc1e91f68b28f2d5d59442ac38ce?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Notre salade Garden se compose d'un mélange de laitue de qualité, garnie de tomates juteuses, de crudités croquantes, et d'une sauce Caesar onctueuse. Fraicheur garantie !">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mini Mozzarella 4 Pcs -->
+        <div class="category-item" id="mini-mozzarella-4-pcs-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/f6bfc0b496aa1ef923633240144ac71e3c477d2f86826ba5fa87278397462eff?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="Mini Mozzarella 4 Pcs" class="item-image">
+            <div class="item-info">
+                <div class="item-name">Mini Mozzarella 4 Pcs</div>
+                <div class="item-description">Pour les fans de Mozzarella, découvrez nos Mozzarella Sticks ! Un
+                    extérieur croustillant et un cœur fondant pour une expérience irrésistible.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Sticks</span>
+                            <span class="price-amount">20.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="mini-mozzarella-4-pcs-btn" data-name="Mini Mozzarella 4 Pcs"
+                        data-price="20.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/f6bfc0b496aa1ef923633240144ac71e3c477d2f86826ba5fa87278397462eff?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Pour les fans de Mozzarella, découvrez nos Mozzarella Sticks ! Un extérieur croustillant et un cœur fondant pour une expérience irrésistible.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- French Fries -->
+        <div class="category-item" id="french-fries-item">
+            <img src="https://glovo.dhmedia.io/image/menus-glovo/products/66a33fb0d1874132d63502ce2e4ad5293542d9d5367d5727ce95229ff58328b0?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                alt="French Fries" class="item-image">
+            <div class="item-info">
+                <div class="item-name">French Fries</div>
+                <div class="item-description">Plus délicieuses que jamais, nos frites salées très chaudes et épaisses
+                    sont dorées à l'extérieur et moelleuses à l'intérieur.</div>
+                <div class="item-footer">
+                    <div class="item-price">
+                        <div class="price-size">
+                            <span class="size-text">Fries</span>
+                            <span class="price-amount">14.00 MAD</span>
+                        </div>
+                    </div>
+                    <button class="item-add-btn" id="french-fries-btn" data-name="French Fries" data-price="14.00"
+                        data-img="https://glovo.dhmedia.io/image/menus-glovo/products/66a33fb0d1874132d63502ce2e4ad5293542d9d5367d5727ce95229ff58328b0?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ=="
+                        data-description="Plus délicieuses que jamais, nos frites salées très chaudes et épaisses sont dorées à l'extérieur et moelleuses à l'intérieur.">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Cart Button -->
+    <button class="view-cart-btn" id="viewCartBtn">
+        <i class="fas fa-shopping-cart"></i>
+        View Cart
+        <span class="cart-item-count" id="cartItemCount">0</span>
+    </button>
+
+    <!-- Stars Animation Container -->
+    <div class="stars-container" id="starsContainer"></div>
+
+    <script>
+        // Products Data for Burger King
+        const productsData = {
+            "Menu Triple Whopper": {
+                name: "Menu Triple Whopper",
+                basePrice: 100.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/4264b2e05b45d41866e5e629105ea388de7e2dd28f69e178242f151b5c817781?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Craquez pour le mythe ! Trois morceaux de viande de bœuf grillées en un seul burger. Relevez le défi et tripler votre dose de saveurs !",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Double Steakhouse Beef": {
+                name: "Menu Double Steakhouse Beef",
+                basePrice: 96.00,
+                img: "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080358/f3230434-11bd-4d73-9974-7819e76127df.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Doublez le plaisir de la nouvelle recette de notre Steakhouse, avec deux viandes de bœuf grillées à la flamme, des oignons croustillants et une délicieuse sauce barbecue.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Double Whopper": {
+                name: "Menu Double Whopper",
+                basePrice: 91.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/caf475bae835b2fb52bdb6e2360eb47ab2a39b8f3ef9c15d63673e297a9a4ec7?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Fan du WHOPPER ? Vous allez adorer sa version grande taille ! Deux savoureuses viandes de bœuf grillées à la flamme et une délicieuse tranche de fromage.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Double Bbq XXL Meal": {
+                name: "Menu Double Bbq XXL Meal",
+                basePrice: 91.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/5cabc63eb897dfd6a3b011bdd4e7cd95e28fbb222d8cd535a0b0c82d64f6e49c?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Faites de la place pour notre Double BBQ XXL, composé de deux tranches de bœuf grillées au feu et garni d'une savoureuse sauce barbecue et de fromage fondu. Aux grandes faims les grands burgers !",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Big King XXL": {
+                name: "Menu Big King XXL",
+                basePrice: 91.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/4a00227e67bc7b972ae75133b61ac2e1d22f8e9d749e4c99cb93ad5eea9d0619?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Extra-extra-large ! L'inimitable sauce BIG KING, deux viandes de boeuf grillées à la flamme et deux délicieuses tranches de fromage. Une icône de taille.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Steakhouse Beef": {
+                name: "Menu Steakhouse Beef",
+                basePrice: 85.00,
+                img: "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080363/76501598-9400-4d61-9376-ec1484312df2.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts? Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de bœuf grillée à la flamme et d'une tranche de fromage fondu.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Whopper": {
+                name: "Menu Whopper",
+                basePrice: 79.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/0fd2364f7cdcd08cb87bb8eb79ca864a2929da5797681ed8aba148f3122750c3?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Craquez pour LE mythe. Une viande de boeuf grillée à la flamme, une mayonnaise onctueuse, des tomates fraîches, une salade croquante, des cornichons et des oignons.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Beef Royal": {
+                name: "Menu Beef Royal",
+                basePrice: 69.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/4432d88887c5acc523888cacb1d85be0eef8d94e527d2bc7a35372855f5a897b?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Un burger avec deux généreuses tranches de bœuf, couronné de fromage et de sauces. Le burger idéal pour les amateurs de bœuf !",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Big King Beef": {
+                name: "Menu Big King Beef",
+                basePrice: 66.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/31c6d60f9f4ca5ff6b49f7100f920d0c420d02e55549966e53249cb4ca8e3d9e?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "L'incontournable Big King, fondez pour sa sauce au goût unique, ses deux viandes de bœuf grillées à la flamme et son fromage fondant. Un chef d'œuvre !",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Double Cheeseburger": {
+                name: "Menu Double Cheeseburger",
+                basePrice: 55.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/5453d9babcd2a584e575373dde1a9f186cc0ab1a58a2d229dd8d8b4049f3fb20?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Le Double Cheeseburger incontournable fait son grand retour : deux steaks de bœuf grillés à la flamme, du fromage cheddar fondu, et deux rondelles de cornichon.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Cheeseburger": {
+                name: "Menu Cheeseburger",
+                basePrice: 31.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/262770b4db498af9d9c04494e343c086d33d5697a270df486f6c7d8bdf4169aa?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Notre petit préféré. Du fromage fondu et une viande de bœuf grillée à la flamme. Légendaire.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Hamburger": {
+                name: "Menu Hamburger",
+                basePrice: 28.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/9c207f8e6765c7b91da2f722c82f06c4b38be58713eb0226c9812f6f03785c1e?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Une viande de bœuf grillée à la flamme, du ketchup, de la moutarde et des cornichons. Un classique.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            // Add chicken products
+            "Menu Double Chicken Royal": {
+                name: "Menu Double Chicken Royal",
+                basePrice: 91.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/ae5208f9c597a9e24c41df2cebb18fe0a812773f156f01992fc0dd75615bdd99?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Vous avez la chance de doubler le plaisir du Chicken Royal, grâce à deux tranches de poulet pané, enveloppées dans une garniture spéciale à la fois croustillante et crémeuse.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Steakhouse Chicken": {
+                name: "Menu Steakhouse Chicken",
+                basePrice: 89.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/44c32def704f4fb2d9d62bc82c7be449f6b492f02f135eadb1142874e8d92da0?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts ? Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de poulet et d'une tranche de fromage fondu.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Chicken Royal": {
+                name: "Menu Chicken Royal",
+                basePrice: 77.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/64ff58fd9e2a81671a598353649ecd107d1e0ec3a462accfc986004275c788c3?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Il y a des choses dont on ne se lasse pas. Un poulet tendre pané aux épices et une salade croquante dans un pain extra-long. Un plaisir qui dure.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Chicken Crispy": {
+                name: "Menu Chicken Crispy",
+                basePrice: 64.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/b5372a4f6509adea7f649d198eddd501bb9276d4f5f1ff7a1f135765d417d556?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Un délicieux burger au poulet (très !) croustillant, accompagné de salade et d'une onctueuse mayonnaise.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Chicken Burger": {
+                name: "Menu Chicken Burger",
+                basePrice: 32.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/4309b4a4f76876b33f136b674c891a02886d76410fdfe20a819b119a91ca2b4a?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Un classique, avec une délicieuse tranche de poulet sur un petit pain au sésame grillé, garnie de laitue fraîche et de sauce crémeuse.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Double Chicken Royal": {
+                name: "Menu Double Chicken Royal",
+                basePrice: 91.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/ae5208f9c597a9e24c41df2cebb18fe0a812773f156f01992fc0dd75615bdd99?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Vous avez la chance de doubler le plaisir du Chicken Royal, grâce à deux tranches de poulet pané, enveloppées dans une garniture spéciale à la fois croustillante et crémeuse.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Steakhouse Chicken": {
+                name: "Menu Steakhouse Chicken",
+                basePrice: 89.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/44c32def704f4fb2d9d62bc82c7be449f6b492f02f135eadb1142874e8d92da0?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts ? Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de poulet et d'une tranche de fromage fondu.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Chicken Royal": {
+                name: "Menu Chicken Royal",
+                basePrice: 77.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/64ff58fd9e2a81671a598353649ecd107d1e0ec3a462accfc986004275c788c3?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Il y a des choses dont on ne se lasse pas. Un poulet tendre pané aux épices et une salade croquante dans un pain extra-long. Un plaisir qui dure.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Chicken Crispy": {
+                name: "Menu Chicken Crispy",
+                basePrice: 64.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/b5372a4f6509adea7f649d198eddd501bb9276d4f5f1ff7a1f135765d417d556?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Un délicieux burger au poulet (très !) croustillant, accompagné de salade et d'une onctueuse mayonnaise.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Chicken Burger": {
+                name: "Menu Chicken Burger",
+                basePrice: 32.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/4309b4a4f76876b33f136b674c891a02886d76410fdfe20a819b119a91ca2b4a?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Un classique, avec une délicieuse tranche de poulet sur un petit pain au sésame grillé, garnie de laitue fraîche et de sauce crémeuse.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+
+            // NEW FISH MENU PRODUCTS
+            "Menu King Fish Spicy": {
+                name: "Menu King Fish Spicy",
+                basePrice: 58.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/77bb3d286b4646d104b36c6be834f0bced39284d14404e85736b35a33e51b09d?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Venez découvrir les nouveaux burgers King Fish Spicy avec une recette toute aussi généreuse qu'épicée : Du poisson pané croustillant, une sauce onctueuse et des jalapeños bien spicy.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu King Fish": {
+                name: "Menu King Fish",
+                basePrice: 57.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/74892746ebf6e57091ef26ba5bf30791173b3da31a9503266b813f612750c91f?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Venez découvrir en exclusivité la nouvelle recette revisitée du Fish : Du poisson pané croustillant, une sauce onctueuse et une salade croquante.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+
+            // NEW KIDS MENU PRODUCTS
+            "Menu Kids Hamburger": {
+                name: "Menu Kids Hamburger",
+                basePrice: 33.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/c4248610d9fb22cf976dadf9a46810e6bd3f7c86a0cf20edae3dfd3f89626598?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Faites plaisir à vos enfants avec notre menu Kids avec un Hamburger qui est notre classique et revisité pour les enfants avec une bonne couche de Ketchup, vous aurez en plus un jouet offert.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Kids Cheeseburger": {
+                name: "Menu Kids Cheeseburger",
+                basePrice: 33.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/e4696d32f4d1f4db99d9bdfe2a70f115f96e18fd0ad87989f238a8d31ba2b8a2?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Faîtes goutez à vos enfants notre Cheeseburger composé d'une galette de bœuf grillée à la flamme, garnie d'une couche de fromage américain fondu, et de garnitures. Servi avec une petite boisson de votre choix et un jouet cadeau.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Kids Chicken Burger": {
+                name: "Menu Kids Chicken Burger",
+                basePrice: 33.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/9806bbf5500990b82bb9ee0de434a054a5b35f79a4e5fbc99e7117e922b472e8?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Le Chicken Burger est un délicieux repas pour enfants, avec un burger au poulet et une bonne couche de Ketchup. Vous pouvez choisir en plus une boisson au choix, et sans oublier un jouet offert.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Kids Chicken Nuggets": {
+                name: "Menu Kids Chicken Nuggets",
+                basePrice: 33.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/c5430f9b98e39e14be6d81d60e4c252da26b01a3faa06cb83f010461f146f3e8?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Le Kids Meal Chicken est composé de 4 nuggets, une boisson des frites et un cadeau surprise pour votre enfant.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Menu Kids Fish": {
+                name: "Menu Kids Fish",
+                basePrice: 33.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/daa4a22737d91c52580a2d991b798f8b64ac18bd81f244e176b365df4d84328f?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Faîtes plaisir à vos enfants grâce à notre burger Fish, avec du bon poisson pané et une couche de Ketchup, vous recevrez en plus un jouet cadeau.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+
+            // NEW BURGERS PRODUCTS
+            "Triple Whopper": {
+                name: "Triple Whopper",
+                basePrice: 85.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/dcb6e7add97083e96275e21555ab2ade653d328ea69abd5a58c7f5c884ab8cd5?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Craquez pour le mythe ! Trois morceaux de viande de bœuf grillées en un seul burger. Relevez le défi et tripler votre dose de saveurs !",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Steakhouse Double Beef": {
+                name: "Steakhouse Double Beef",
+                basePrice: 81.00,
+                img: "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080317/7e908a25-c567-4236-b79e-e4615d81fc3f.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Doublez le plaisir de la nouvelle recette de notre Steakhouse, avec deux viandes de bœuf grillées à la flamme, des oignons croustillants, et une délicieuse sauce barbecue.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Double Whopper": {
+                name: "Double Whopper",
+                basePrice: 76.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/ff7d2fc78ae12f329fe4248ed3463c42f3f0eff68788cf8db1d50e7b8534aa7b?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Fan du WHOPPER ? Vous allez adorer sa version grande taille ! Deux savoureuses viandes de bœuf grillées à la flamme et une délicieuse tranche de fromage",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Double Bbq XXL Meal": {
+                name: "Double Bbq XXL Meal",
+                basePrice: 76.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/9b9427f4dd62ed4cd80fa0983a49b188765e55d59e64ac7bd171a891c429d5b9?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Faites de la place pour notre Double BBQ XXL, composé de deux tranches de bœuf grillées au feu et garni d'une savoureuse sauce barbecue et de fromage fondu. Aux grandes faims les grands burgers !",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Big King XXL": {
+                name: "Big King XXL",
+                basePrice: 76.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/c0ad505d9742f325aa18b19b15df4afbb7d68b41413b853777573639b0b5da28?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Extra-extra-large ! L'inimitable sauce BIG KING, deux viandes de bœuf grillées à la flamme et deux délicieuses tranches de fromage. Une icône de taille.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Double Chicken Royal": {
+                name: "Double Chicken Royal",
+                basePrice: 76.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/9dcf8196fac3f4180b91a58939d2b72d2dbfcedb843711e271c0285ca393882a?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Vous avez la chance de doubler le plaisir du Chicken Royal, grâce à deux tranches de poulet pané, enveloppées dans une garniture spéciale à la fois croustillante et crémeuse.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Steakhouse Chicken": {
+                name: "Steakhouse Chicken",
+                basePrice: 74.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/9cbb4974be76198311d2343f79257aa1201227f6738256da7657098ce24be8de?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts ? Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de poulet et d'une tranche de fromage fondu.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Steakhouse Beef": {
+                name: "Steakhouse Beef",
+                basePrice: 70.00,
+                img: "https://glovo.dhmedia.io/image/global-menu-service/GV_MA/vendor/238341/PRODUCT/41772080332/7d3f7941-06a6-47af-96fd-0b9760ec957e.jpg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Découvrez la recette revisitée de notre fameux Steakhouse. Ses atouts? Ses oignons croustillants, sa délicieuse sauce barbecue, en plus d'une savoureuse viande de bœuf grillée à la flamme et d'une tranche de fromage fondu.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Whopper": {
+                name: "Whopper",
+                basePrice: 64.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/eb03309fe6787ec55d30a85c320038ccb634a19430cddc6d60b43fca766feb90?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Craquez pour LE mythe. Une viande de boeuf grillée à la flamme, une mayonnaise onctueuse, des tomates fraîches, une salade croquante, des cornichons et des oignons.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Chicken Royal": {
+                name: "Chicken Royal",
+                basePrice: 62.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/614f375ab232cbcfad85735a0f1a569a092d8a21cf08a445879596f6287d0779?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Il y a des choses dont on ne se lasse pas.. Un poulet tendre pané aux épices et une salade croquante dans un pain extra-long. Un plaisir qui dure.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Beef Royal": {
+                name: "Beef Royal",
+                basePrice: 59.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/0c61b63f0393bf16d5191ab6cdda1332122c96028fa885288ecbdab121b46a8e?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Un burger avec deux généreuses tranches de bœuf, couronné de fromage et de sauces. Le burger idéal pour les amateurs de bœuf !",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Big King Beef": {
+                name: "Big King Beef",
+                basePrice: 51.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/032c62cdebd0d23101594a4b72e854f7f036c99f2c4868875740dbf6afe07e36?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "L'incontournable Big King, fondez pour sa sauce au goût unique, ses deux viandes de bœuf grillées à la flamme et son fromage fondant. Un chef d'œuvre !",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Chicken Crispy": {
+                name: "Chicken Crispy",
+                basePrice: 49.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/7d638908cb8c203fc2a0424ce1bafb90a9e1faf7a1cb332a75beee3760e34237?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Un délicieux burger au poulet (très !) croustillant, accompagné de salade et d'une onctueuse mayonnaise.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Double Cheeseburger": {
+                name: "Double Cheeseburger",
+                basePrice: 45.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/796f28525b5fd5a7d11f95b1c4548f6a040616738c095718267ad6e072bac875?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Le Double Cheeseburger incontournable fait son grand retour : deux steaks de bœuf grillés à la flamme, du fromage cheddar fondu, et deux rondelles de cornichon.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "King Fish Spicy": {
+                name: "King Fish Spicy",
+                basePrice: 43.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/5b868367f0cb732fab935b7c31d3994f1d709e16bb2b1a13bd5ba9dd3a83d308?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Venez découvrir les nouveaux burgers King Fish Spicy avec une recette toute aussi généreuse qu'épicée : Du poisson pané croustillant, une sauce onctueuse et des jalapeños bien spicy.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "King Fish": {
+                name: "King Fish",
+                basePrice: 42.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/47aea329a76e887e7a9aab4cff7d0a9de4cacf0313ec343655f45fddeb36fc89?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Venez découvrir en exclusivité la nouvelle recette revisitée du Fish : Du poisson pané croustillant, une sauce onctueuse et une salade croquante.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Chicken Burger": {
+                name: "Chicken Burger",
+                basePrice: 22.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/06cd6f99483cdc0cc0d0eff97292c23a53329b2e91d9c70d2929713595e2a108?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Un classique, avec une délicieuse tranche de poulet sur un petit pain au sésame grillé, garni de laitue fraîche et de sauce crémeuse.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Cheeseburger": {
+                name: "Cheeseburger",
+                basePrice: 21.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/48e8545db36b40e7ebbe59c798d9976e672ae2fe68961ce7326ff09942eff9ec?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Notre petit préféré. Du fromage fondu et une viande de bœuf grillée à la flamme. Légendaire.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Hamburger": {
+                name: "Hamburger",
+                basePrice: 18.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/e7efbbcf7cb68c6cc7a917389b4358051629745600b131e2532f4d8f1dc56f3a?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Une viande de bœuf grillée à la flamme, du ketchup, de la moutarde et des cornichons. Un classique.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+
+            // NEW ACCOMPAGNEMENTS PRODUCTS
+            "Chicken Salad": {
+                name: "Chicken Salad",
+                basePrice: 34.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/2aaf61f8e3c3f5834da78560233c69821aa65951d439193b7ea4b163c32534ed?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Notre salade de poulet est un merveilleux mélange de laitue de qualité, de tomates juteuses, de concombres frais et de maïs sucré. Servi avec une sauce Caesar onctueuse et garni de poulet juteux.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Chicken Nuggets": {
+                name: "Chicken Nuggets",
+                basePrice: 33.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/a93c32de2b68ed935316943e67bb86d1988d31e8557a7617d3440296ecdbd20d?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Leur secret ? croustillants à l'extérieur, tendres à l'intérieur. Et vous, à quelle sauce allez-vous les manger ?",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Fish Salad": {
+                name: "Fish Salad",
+                basePrice: 32.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/75e4420d861bca92cd4e358551f9cd246043874cbc329c6ad1e66596c085b2b4?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Notre salade de poisson est un merveilleux mélange de laitue de qualité, de tomates juteuses, de concombres frais et de maïs sucré. Servi avec de la vinaigrette et garni de poisson pané.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Garden Salad": {
+                name: "Garden Salad",
+                basePrice: 25.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/c123beaa31ea22f0771a14fbfa28343656f7dc1e91f68b28f2d5d59442ac38ce?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Notre salade Garden se compose d'un mélange de laitue de qualité, garnie de tomates juteuses, de crudités croquantes, et d'une sauce Caesar onctueuse. Fraicheur garantie !",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "Mini Mozzarella 4 Pcs": {
+                name: "Mini Mozzarella 4 Pcs",
+                basePrice: 20.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/f6bfc0b496aa1ef923633240144ac71e3c477d2f86826ba5fa87278397462eff?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Pour les fans de Mozzarella, découvrez nos Mozzarella Sticks ! Un extérieur croustillant et un cœur fondant pour une expérience irrésistible.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            },
+            "French Fries": {
+                name: "French Fries",
+                basePrice: 14.00,
+                img: "https://glovo.dhmedia.io/image/menus-glovo/products/66a33fb0d1874132d63502ce2e4ad5293542d9d5367d5727ce95229ff58328b0?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ==",
+                description: "Plus délicieuses que jamais, nos frites salées très chaudes et épaisses sont dorées à l'extérieur et moelleuses à l'intérieur.",
+                customizations: {
+                    sizes: [],
+                    base: [],
+                    extras: []
+                }
+            }
+        };
+
+        // UNIFIED CART CONFIG
+        const BURGERKING_CONFIG = {
+            cartKey: 'unifiedCart',
+            restaurantName: 'Burger King',
+            restaurantId: 'burgerking',
+            whatsappNumber: '212642620325',
+            emoji: '🍔'
+        };
+
+        // Initialize cart from unified storage
+        let cart = JSON.parse(localStorage.getItem(BURGERKING_CONFIG.cartKey)) || [];
+
+        // DOM Elements
+        const categoriesContainer = document.getElementById('categoriesContainer');
+        const viewCartBtn = document.getElementById('viewCartBtn');
+        const cartItemCount = document.getElementById('cartItemCount');
+
+        const starsContainer = document.getElementById('starsContainer');
+        const backBtn = document.getElementById('backBtn');
+        const searchBtn = document.getElementById('searchBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const searchModal = document.getElementById('searchModal');
+        const closeSearchBtn = document.getElementById('closeSearchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const shareModal = document.getElementById('shareModal');
+        const closeShareBtn = document.getElementById('closeShareBtn');
+        const whatsappShareBtn = document.getElementById('whatsappShareBtn');
+        const copyOrderBtn = document.getElementById('copyOrderBtn');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCartCount();
+            renderCategories();
+            setupEventListeners();
+            setupScrollObserver();
+            setupSearchFunctionality();
+            setupShareFunctionality();
+        });
+
+        // Render categories in navigation
+        function renderCategories() {
+            const categories = [
+                { id: 'menusBeefSection', name: 'Menus Beef', icon: 'fas fa-hamburger' },
+                { id: 'menusChickenSection', name: 'Menus Chicken', icon: 'fas fa-drumstick-bite' },
+                { id: 'menusFishSection', name: 'Menus Fish', icon: 'fas fa-fish' },
+                { id: 'menusKidsSection', name: 'Menus Kids', icon: 'fas fa-child' },
+                { id: 'burgersSection', name: 'Burgers', icon: 'fas fa-burger' },
+                { id: 'accompagnementsSection', name: 'Accompagnements', icon: 'fas fa-utensils' }
+            ];
+
+            categoriesContainer.innerHTML = '';
+            categories.forEach((category, index) => {
+                const button = document.createElement('div');
+                button.className = `category ${category.id === 'menusBeefSection' ? 'active' : ''}`;
+                button.setAttribute('data-category', category.id);
+                button.innerHTML = `<i class="${category.icon}"></i> ${category.name}`;
+
+                button.style.animationDelay = `${index * 0.1}s`;
+
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.category').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    button.classList.add('active');
+
+                    const categorySection = document.getElementById(category.id);
+                    if (categorySection) {
+                        categorySection.scrollIntoView({ behavior: 'smooth' });
+                    }
+
+                    button.classList.add('highlight');
+                    setTimeout(() => {
+                        button.classList.remove('highlight');
+                    }, 500);
+                });
+
+                categoriesContainer.appendChild(button);
+            });
+        }
+
+        // Add to cart function - FIXED VERSION
+        function addToCart(event, productName, product) {
+            const existingItemIndex = cart.findIndex(item =>
+                item.name === productName &&
+                item.restaurantId === BURGERKING_CONFIG.restaurantId
+            );
+
+            if (existingItemIndex !== -1) {
+                cart[existingItemIndex].quantity += 1;
+                cart[existingItemIndex].totalPrice = cart[existingItemIndex].price * cart[existingItemIndex].quantity;
+            } else {
+                cart.push({
+                    productKey: productName.toLowerCase().replace(/\s+/g, '-'),
+                    restaurantId: BURGERKING_CONFIG.restaurantId,
+                    restaurantName: BURGERKING_CONFIG.restaurantName,
+                    restaurantEmoji: BURGERKING_CONFIG.emoji,
+                    name: product.name,
+                    price: product.basePrice,
+                    img: product.img,
+                    quantity: 1,
+                    totalPrice: product.basePrice
+                });
+            }
+
+            saveCart();
+            updateCartCount();
+
+            // Now event is properly available
+            const addBtn = event.target.closest('.item-add-btn');
+            if (addBtn) {
+                addBtn.classList.add('pulse');
+                setTimeout(() => {
+                    addBtn.classList.remove('pulse');
+                }, 300);
+            }
+
+            createStarsAnimation();
+
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+
+        // Save cart to localStorage
+        function saveCart() {
+            localStorage.setItem(BURGERKING_CONFIG.cartKey, JSON.stringify(cart));
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartItemCount.textContent = totalItems;
+        }
+
+        // Create stars animation
+        function createStarsAnimation() {
+            const starCount = 8;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                const startX = Math.random() * window.innerWidth;
+                const startY = window.innerHeight;
+                const endX = window.innerWidth - 30;
+                const endY = 30;
+                const size = 12 + Math.random() * 12;
+
+                star.style.left = `${startX}px`;
+                star.style.top = `${startY}px`;
+                star.style.fontSize = `${size}px`;
+                star.style.setProperty('--tx', `${endX - startX}px`);
+                star.style.setProperty('--ty', `${endY - startY}px`);
+
+                starsContainer.appendChild(star);
+                star.style.animation = `starAnimation 1s ease forwards`;
+
+                setTimeout(() => {
+                    if (star.parentNode) {
+                        star.parentNode.removeChild(star);
+                    }
+                }, 1000);
+            }
+        }
+
+        // Setup search functionality
+        function setupSearchFunctionality() {
+            // Open search modal
+            searchBtn.addEventListener('click', () => {
+                searchModal.style.display = 'flex';
+                searchInput.focus();
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+            });
+
+            // Close search modal
+            closeSearchBtn.addEventListener('click', () => {
+                searchModal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside
+            searchModal.addEventListener('click', (e) => {
+                if (e.target === searchModal) {
+                    searchModal.style.display = 'none';
+                }
+            });
+
+            // Search input handler
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+
+                if (searchTerm.length === 0) {
+                    searchResults.innerHTML = '';
+                    return;
+                }
+
+                const results = [];
+
+                // Search in all menu items
+                document.querySelectorAll('.category-item').forEach(item => {
+                    const name = item.querySelector('.item-name').textContent.toLowerCase();
+                    const description = item.querySelector('.item-description').textContent.toLowerCase();
+                    const price = item.querySelector('.price-amount').textContent;
+                    const id = item.id;
+
+                    if (name.includes(searchTerm) || description.includes(searchTerm)) {
+                        results.push({
+                            name: item.querySelector('.item-name').textContent,
+                            description: item.querySelector('.item-description').textContent,
+                            price: price,
+                            id: id
+                        });
+                    }
+                });
+
+                // Display results
+                displaySearchResults(results);
+            });
+        }
+
+        // Setup share functionality
+        function setupShareFunctionality() {
+            // Open share modal
+            shareBtn.addEventListener('click', () => {
+                shareModal.style.display = 'flex';
+            });
+
+            // Close share modal
+            closeShareBtn.addEventListener('click', () => {
+                shareModal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside
+            shareModal.addEventListener('click', (e) => {
+                if (e.target === shareModal) {
+                    shareModal.style.display = 'none';
+                }
+            });
+
+            // WhatsApp share button
+            whatsappShareBtn.addEventListener('click', () => {
+                const orderText = generateOrderText();
+                const whatsappUrl = `https://wa.me/${BURGERKING_CONFIG.whatsappNumber}?text=${encodeURIComponent(orderText)}`;
+                window.open(whatsappUrl, '_blank');
+                shareModal.style.display = 'none';
+            });
+
+            // Copy order details button
+            copyOrderBtn.addEventListener('click', () => {
+                const orderText = generateOrderText();
+                navigator.clipboard.writeText(orderText).then(() => {
+                    alert('Order details copied to clipboard!');
+                    shareModal.style.display = 'none';
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                    alert('Failed to copy order details. Please try again.');
+                });
+            });
+        }
+
+        // Generate order text for sharing
+        function generateOrderText() {
+            const burgerKingItems = cart.filter(item => item.restaurantId === BURGERKING_CONFIG.restaurantId);
+
+            if (burgerKingItems.length === 0) {
+                return "Check out Burger King menu!\n\n🍔 *Burger King*\nFlame-Grilled Burgers\n\nI haven't added any items to my cart yet.";
+            }
+
+            let orderText = "🍔 *Burger King Order*\n\n";
+
+            // Add restaurant info
+            orderText += `*Restaurant:* Burger King\n`;
+            orderText += `*Order Date:* ${new Date().toLocaleDateString()}\n\n`;
+            orderText += "*Order Items:*\n";
+
+            let total = 0;
+            burgerKingItems.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.name} x${item.quantity}\n`;
+                orderText += `   Price: ${item.price.toFixed(2)} MAD each\n`;
+                orderText += `   Subtotal: ${item.totalPrice.toFixed(2)} MAD\n\n`;
+                total += item.totalPrice;
+            });
+
+            orderText += `*Total:* ${total.toFixed(2)} MAD\n\n`;
+            orderText += "---\n";
+            orderText += "View the full menu: " + window.location.href;
+
+            return orderText;
+        }
+
+        // Display search results
+        function displaySearchResults(results) {
+            searchResults.innerHTML = '';
+
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item">No results found</div>';
+                return;
+            }
+
+            results.forEach(result => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'search-result-item';
+                resultItem.innerHTML = `
+                <div class="search-result-name">${result.name}</div>
+                <div class="search-result-description">${result.description}</div>
+                <div class="search-result-price">${result.price}</div>
+            `;
+
+                resultItem.addEventListener('click', () => {
+                    // Close search modal
+                    searchModal.style.display = 'none';
+
+                    // Scroll to the item
+                    const itemElement = document.getElementById(result.id);
+                    if (itemElement) {
+                        itemElement.scrollIntoView({ behavior: 'smooth' });
+
+                        // Highlight the item
+                        itemElement.style.backgroundColor = '#FFF8F0';
+                        setTimeout(() => {
+                            itemElement.style.backgroundColor = '';
+                        }, 2000);
+                    }
+                });
+
+                searchResults.appendChild(resultItem);
+            });
+        }
+
+        // Setup scroll observer for sections
+        function setupScrollObserver() {
+            const sections = document.querySelectorAll('.category-items-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+
+                        // Update active category in navigation
+                        const categoryId = entry.target.id;
+                        document.querySelectorAll('.category').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        const categoryBtn = document.querySelector(`[data-category="${categoryId}"]`);
+                        if (categoryBtn) {
+                            categoryBtn.classList.add('active');
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // Setup event listeners - FIXED VERSION (no duplicate)
+        function setupEventListeners() {
+            // Back button - go to index.html
+            backBtn.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+
+            // View cart button
+            viewCartBtn.addEventListener('click', () => {
+                window.location.href = 'checkout.html';
+            });
+
+            // Add event listeners to all add buttons (ONLY ONCE)
+            document.querySelectorAll('.item-add-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productName = button.getAttribute('data-name');
+                    const product = productsData[productName];
+
+                    if (product) {
+                        // Pass the event to addToCart function
+                        addToCart(e, productName, product);
+                    }
+                });
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (searchModal.style.display === 'flex') {
+                        searchModal.style.display = 'none';
+                    }
+                    if (shareModal.style.display === 'flex') {
+                        shareModal.style.display = 'none';
+                    }
+                }
+                if (e.ctrlKey && e.key === 'f') {
+                    e.preventDefault();
+                    searchModal.style.display = 'flex';
+                    searchInput.focus();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
